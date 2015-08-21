@@ -1,0 +1,5 @@
+node_modules\.bin\protractor tests/e2e/protractor-conf.js
+
+node_modules\.bin\webdriver-manager update
+
+--ignore=scripts
