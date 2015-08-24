@@ -20,7 +20,7 @@ exports.config = {
 
 
     // url where your app is running, relative URLs are prepending with this URL
-    baseUrl: 'http://localhost:9000/beta/',
+    baseUrl: process.env.HOST,
 
     // testing framework, jasmine is the default
     framework : 'cucumber',
