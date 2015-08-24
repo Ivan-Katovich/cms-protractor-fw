@@ -1,18 +1,12 @@
-//describe('angularjs homepage todo list', function() {
-//    it('should add a todo', function() {
-//        browser.get('http://localhost:9000/beta/');
-//
-//        expect(element(by.css('.hero-section__heading-title')).getText()).toEqual('Leave London behind');
-//
-//    });
-//});
-
+var pageFactory = require('./../../support/pages/pageFactory');
+//var SuperHomePage = require('./../../support/pages/superHomePage');
+//var superHomePage = new SuperHomePage(element(by.css('body')));
 
 var steps = function(){
 
     this.When(/^I navigate to the Home page$/, function (callback) {
-        console.log('I am in ===============');
-        browser.get('http://localhost:9000/beta/').then(callback);
+        console.log('I am in ==============='+process.cwd());
+        browser.get(browser.baseUrl).then(callback);
     });
 
     this.Then(/^the title should have correct text$/, function (callback) {
@@ -23,6 +17,15 @@ var steps = function(){
             expect(text).to.equal('Leave London behind');
             callback();
         });
+    });
+
+    this.Then(/^the main logo should be visible$/, function (callback) {
+        pageFactory.getPage('super-home-page').isMainLogoVisible()
+            .then(function(isVisible){
+                console.log(isVisible);
+                expect(isVisible).to.equal(true);
+                callback();
+            });
     });
 
 };
