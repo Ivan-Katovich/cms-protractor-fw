@@ -1,10 +1,11 @@
 
-var Page = function(){
+var Page = function(){};
 
-    this.sayHello = function(){
-        return console.log('Hello world');
-    }
+Page.prototype._root = element(by.css('body'));
 
+Page.prototype.sayHello = function(){
+    console.log('Hello world');
+    return element(by.css('.hero-section__heading-title')).getText();
 };
 
 module.exports = Page;

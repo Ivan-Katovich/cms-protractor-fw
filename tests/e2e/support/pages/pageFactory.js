@@ -1,21 +1,20 @@
-var Page = require('./page');
 var SuperHomePage = require('./superHomePage');
+var ResultsPage = require('./resultsPages/resultsPage');
 
 pageFactory = {
-    inherits: function(Parent,Child){
-        var F = function(){};
-        F.prototype = new Parent();
-        Child.prototype = new F();
-        Child.prototype.constructor = Child;
-    },
-    getPage: function(channel){
-        var channels = {
-            'super-home-page': SuperHomePage
+    currentPage: 'undefined',
+    getPage: function(basePage){
+        var pages = {
+            'super-home-page': SuperHomePage,
+            'results-page': ResultsPage,
+            'car-hire': 'CarHire',
+            'flights': 'Flifhts',
+            'hotels': 'Hotels',
+            'holidays': 'Holidays',
+            'insurance': 'insurance'
         };
-        this.inherits(Page,channels[channel]);
-        return new channels[channel](element(by.css('body')));
+        return new pages[basePage]();
     }
-    //superHomePage: this.getChannelResultsPageConstructor('super-home-page')
 };
 
 module.exports = pageFactory;

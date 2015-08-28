@@ -25,7 +25,7 @@ exports.config = {
     // testing framework, jasmine is the default
     framework : 'cucumber',
     cucumberOpts : {
-        require : [ 'step_definitions/**/*.js' ],
+        require : [ 'support/protractor-extensions.js','step_definitions/**/*.js','step_definitions/hooks.js' ],
         format : 'pretty'
     },
     onPrepare : function() {
