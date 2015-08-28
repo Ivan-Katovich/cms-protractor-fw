@@ -54,18 +54,6 @@ var SuperHomePage = function(){
         return gadgetFactory.currentSearchGadget.getDriversAdgeText();
     };
 
-    this.selectPageDropdownByPosition = function(field,position){
-        return gadgetFactory.currentSearchGadget.selectDropdownByPosition(field,position);
-    };
-
-    this.completePageFieldByValue = function(field,value){
-        return gadgetFactory.currentSearchGadget.completeFieldByValue(field,value);
-    };
-
-    this.getPageFieldLabel = function(field){
-        return gadgetFactory.currentSearchGadget.getFieldLabel(field);
-    };
-
 };
 
 helper.inherits(Page,SuperHomePage);
