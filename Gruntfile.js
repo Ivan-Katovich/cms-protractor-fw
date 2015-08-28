@@ -31,7 +31,8 @@ module.exports = function(grunt) {
                 options: {
                     configFile: 'tests/e2e/protractor-conf.js', // Target-specific config file
                     args: {
-                        seleniumAddress: process.env.SELENIUM_SERVER
+                        seleniumAddress: process.env.SELENIUM_SERVER,
+                        tags: ['@test','~@ignore']
                     } // Target-specific arguments
                 }
             }

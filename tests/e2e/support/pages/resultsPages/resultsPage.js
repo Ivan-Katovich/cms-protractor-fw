@@ -1,3 +1,6 @@
+//var helper = require('./../helpers/helper');
+var gadgetFactory = require('./../../ui_elements/gadgetFactory');
+var Page = require('./../superHomePage');
 
 var ResultsPage = function(){
 
@@ -7,4 +10,6 @@ var ResultsPage = function(){
 
 };
 
-module.exports = new ResultsPage();
+//helper.inherits(Page,ResultsPage);
+
+module.exports = ResultsPage;
