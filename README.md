@@ -3,6 +3,10 @@ Protractor javascript framework
 
 ## Setup framework
 
+Preconditions
+
+    npm install -g grunt-cli
+
 Open a command window and run:
 
     npm install --ignore=scripts
