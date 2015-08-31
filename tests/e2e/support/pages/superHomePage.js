@@ -7,7 +7,7 @@ var SuperHomePage = function(){
 
     var _this=this;
 
-    this._data = {
+    _this._data = {
         elements: {
             mainLogo: {
                 css: '.site-logo-link',
@@ -22,10 +22,6 @@ var SuperHomePage = function(){
                 isSingle: false
             }
         }
-    };
-
-    this.navigateTo = function(){
-        return browser.get(browser.baseUrl);
     };
 
     this.isMainLogoVisible = function(){

@@ -5,7 +5,7 @@ var Autocomplete = function(data){
 
     var _this = this;
 
-    this._root = data.parent.element(by.css(data.css));
+    _this._root = data.parent.element(by.css(data.css));
 
     this.completeByValue = function(value){
         return _this._root.all(by.css('input')).get(1).sendKeys(value)

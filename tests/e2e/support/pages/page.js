@@ -21,4 +21,8 @@ Page.prototype.getPageFieldLabel = function(field){
     return gadgetFactory.currentSearchGadget.getFieldLabel(field);
 };
 
+Page.prototype.submitPageForm = function(){
+    return gadgetFactory.currentSearchGadget.submitForm();
+};
+
 module.exports = Page;
