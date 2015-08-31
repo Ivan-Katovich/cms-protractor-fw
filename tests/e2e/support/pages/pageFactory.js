@@ -1,19 +1,20 @@
 var SuperHomePage = require('./superHomePage');
 var ResultsPage = require('./resultsPages/resultsPage');
+var CarHireResultsPage = require('./resultsPages/carHireResultsPage');
 
 pageFactory = {
     currentPage: 'undefined',
-    getPage: function(basePage){
+    getPage: function(page){
         var pages = {
-            'super-home-page': SuperHomePage,
-            'results-page': ResultsPage,
-            'car-hire': 'CarHire',
+            'super-home': SuperHomePage,
+            'results': ResultsPage,
+            'car-hire': CarHireResultsPage,
             'flights': 'Flifhts',
             'hotels': 'Hotels',
             'holidays': 'Holidays',
             'insurance': 'insurance'
         };
-        return new pages[basePage]();
+        this.currentPage = new pages[page]();
     }
 };
 

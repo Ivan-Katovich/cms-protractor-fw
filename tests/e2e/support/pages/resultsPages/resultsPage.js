@@ -1,15 +1,22 @@
-//var helper = require('./../helpers/helper');
+var helper = require('./../../helpers/helper');
 var gadgetFactory = require('./../../ui_elements/gadgetFactory');
-var Page = require('./../superHomePage');
+var Page = require('./../page');
 
-var ResultsPage = function(){
+var ResultsPage = function(){};
 
-    this.sayResultsHello = function(){
-        return console.log('Hello results');
+ResultsPage.prototype._resultsData = {
+    elements:{
+        mainTitle: {
+            css: '.hotel-result-card',
+            isSingle: false
+        }
     }
-
 };
 
-//helper.inherits(Page,ResultsPage);
+ResultsPage.prototype.isMainTitleExists = function(){
+    return helper.elementGetter(this._root,this._resultsData).isDisplayed();
+};
+
+helper.inherits(Page,ResultsPage);
 
 module.exports = ResultsPage;

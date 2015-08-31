@@ -6,9 +6,9 @@ var CarHireSearchGadget = function(root){
 
     var _this = this;
 
-    this._root=root;
+    _this._root=root;
 
-    this._data = {
+    _this._data = {
         elements: {
             driversAgeLabel: {
                 css: '.searchGadgetForm__checkbox-label',

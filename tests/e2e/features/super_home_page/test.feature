@@ -5,7 +5,7 @@ Feature: Home page check
 
   @test
   Scenario: Hotels e2e scenarios from TSM home page with default parameters to hotels results page
-    When I navigate to the Home page
+    When I navigate to the 'super-home' page
     Then the title should be 'Leave London behind'
     And the main logo should be visible
     And say hello world
@@ -16,4 +16,7 @@ Feature: Home page check
     When I select '3'rd option in the 'pick-up-time' dropdown field
     And I complete 'pick-up-from' field with value 'Manchester'
     And I complete 'pick-up-time' field with value '10:00'
+    And I click on search button
+    Then I should be taken to the 'car-hire' results page
+    And results page main title should be visible
 

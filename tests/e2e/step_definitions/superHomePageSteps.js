@@ -1,34 +1,33 @@
 var pageFactory = require('./../support/pages/pageFactory');
+var browserUtils = require('./../support/helpers/browserUtils');
 //var SuperHomePage = require('./../../support/pages/superHomePage');
 //var superHomePage = new SuperHomePage(element(by.css('body')));
 
 var steps = function(){
 
-    var superHomePage = pageFactory.getPage('super-home-page');
-
-    this.When(/^I navigate to the Home page$/, function (callback) {
-        superHomePage.navigateTo()
-            .then(callback);
-    });
-
     this.When(/^I select '(.+)' search gadget$/, function (channel,callback) {
-        superHomePage.initSearchGadget(channel)
+        pageFactory.currentPage.initSearchGadget(channel)
             .then(callback);
     });
 
     this.When(/^I select '(.+)'(?:st|th|nd|rd) option in the '(.+)' dropdown field$/, function (position,field,callback) {
-        superHomePage.selectPageDropdownByPosition(field,position)
+        pageFactory.currentPage.selectPageDropdownByPosition(field,position)
             .then(callback);
     });
 
     this.When(/^I complete '(.+)' field with value '(.+)'$/, function (field,value,callback) {
-        superHomePage.completePageFieldByValue(field,value)
+        pageFactory.currentPage.completePageFieldByValue(field,value)
+            .then(callback);
+    });
+
+    this.When(/^I click on search button$/, function (callback) {
+        pageFactory.currentPage.submitPageForm()
             .then(callback);
     });
 
     this.Then(/^the title should be '(.+)'$/, function (expText,callback) {
         //expect(element(by.css('.hero-section__heading-title')).getText()).to.eventually.equal('Leave London111 behind');
-        superHomePage.getTitleText()
+        pageFactory.currentPage.getTitleText()
             .then(function(text){
                 expect(text).to.equal(expText);
                 callback();
@@ -36,7 +35,7 @@ var steps = function(){
     });
 
     this.Then(/^the main logo should be visible$/, function (callback) {
-        superHomePage.isMainLogoVisible()
+        pageFactory.currentPage.isMainLogoVisible()
             .then(function(isVisible){
                 expect(isVisible).to.be.true;
                 callback();
@@ -44,7 +43,7 @@ var steps = function(){
     });
 
     this.Then(/^say hello world$/, function (callback) {
-        superHomePage.sayHello()
+        pageFactory.currentPage.sayHello()
             .then(function(text){
                 expect(text).to.equal('Leave London behind');
                 callback();
@@ -52,7 +51,7 @@ var steps = function(){
     });
 
     this.Then(/^car-hire driver's age text should be '(.+)'$/, function (expText,callback) {
-        superHomePage.getCarHireDriversAgeText()
+        pageFactory.currentPage.getCarHireDriversAgeText()
             .then(function(text){
                 expect(text).to.equal(expText);
                 callback();
@@ -60,7 +59,7 @@ var steps = function(){
     });
 
     this.Then(/^label of the '(.+)' field should be '(.+)'$/, function (field,expText,callback) {
-        superHomePage.getPageFieldLabel(field)
+        pageFactory.currentPage.getPageFieldLabel(field)
             .then(function(text){
                 expect(text).to.equal(expText);
                 callback();

@@ -5,7 +5,7 @@ var Dropdown = function(data){
 
     var _this = this;
 
-    this._root = data.parent.element(by.css(data.css));
+    _this._root = data.parent.element(by.css(data.css));
 
     this.selectByPosition = function(position){
         return _this._root.element(by.css('select')).click()
