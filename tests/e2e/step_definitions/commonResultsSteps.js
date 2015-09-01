@@ -4,7 +4,7 @@ var browserUtils = require('./../support/helpers/browserUtils');
 var steps = function(){
 
     this.Then(/^results page main title should be visible$/, function (callback) {
-        pageFactory.currentPage.isMainTitleExists()
+        pageFactory.currentPage.isMainTitleVisible()
             .then(function(isVisible){
                 expect(isVisible).to.be.true;
                 callback();

@@ -44,8 +44,7 @@ var steps = function(){
 
     this.Then(/^say hello world$/, function (callback) {
         pageFactory.currentPage.sayHello()
-            .then(function(text){
-                expect(text).to.equal('Leave London behind');
+            .then(function(){
                 callback();
             });
     });
