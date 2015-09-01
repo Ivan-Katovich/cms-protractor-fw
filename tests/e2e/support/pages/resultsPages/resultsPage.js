@@ -4,19 +4,20 @@ var Page = require('./../page');
 
 var ResultsPage = function(){};
 
+helper.inherits(Page,ResultsPage);
+
 ResultsPage.prototype._resultsData = {
     elements:{
         mainTitle: {
-            css: '.hotel-result-card',
-            isSingle: false
+            css: '.results-summary__title',
+            isSingle: true
         }
     }
 };
 
-ResultsPage.prototype.isMainTitleExists = function(){
-    return helper.elementGetter(this._root,this._resultsData).isDisplayed();
+ResultsPage.prototype.isMainTitleVisible = function(){
+    return helper.elementGetter(this._root,this._resultsData.elements.mainTitle).isDisplayed();
 };
 
-helper.inherits(Page,ResultsPage);
 
 module.exports = ResultsPage;

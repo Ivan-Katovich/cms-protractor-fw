@@ -6,7 +6,7 @@ Page.prototype._root = element(by.css('body'));
 
 Page.prototype.sayHello = function(){
     console.log('Hello world');
-    return element(by.css('.hero-section__heading-title')).getText();
+    return element(by.css('.hero-section__heading-title')).isDisplayed();
 };
 
 Page.prototype.selectPageDropdownByPosition = function(field,position){
