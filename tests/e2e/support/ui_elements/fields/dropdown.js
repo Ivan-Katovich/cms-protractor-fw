@@ -7,14 +7,14 @@ var Dropdown = function(data){
 
     _this._root = data.parent.element(by.css(data.css));
 
-    this.selectByPosition = function(position){
+    _this.selectByPosition = function(position){
         return _this._root.element(by.css('select')).click()
             .then(function(){
                 return _this._root.all(by.css('option')).get(position-1).click();
             });
     };
 
-    this.completeByValue = function(value){
+    _this.completeByValue = function(value){
         return _this._root.click()
             .then(function(){
                 return _this._root.element(by.cssContainingText('option',value)).click();

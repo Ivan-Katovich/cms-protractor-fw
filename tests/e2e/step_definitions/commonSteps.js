@@ -10,6 +10,11 @@ var steps = function() {
             .then(callback);
     });
 
+    this.When(/^I wait for page loaded$/, function (callback) {
+        pageFactory.currentPage.waitForPageLoaded()
+            .then(callback);
+    });
+
     this.Then(/^I should be taken to the '(.+)' results page$/, function (page,callback) {
         browserUtils.waitForRedirect(page)
             .then(callback);

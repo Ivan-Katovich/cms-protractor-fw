@@ -7,7 +7,7 @@ var Autocomplete = function(data){
 
     _this._root = data.parent.element(by.css(data.css));
 
-    this.completeByValue = function(value){
+    _this.completeByValue = function(value){
         return _this._root.all(by.css('input')).get(1).sendKeys(value)
             .then(function(){
                 return _this._root.element(by.css('.tsmAutoCompleteResults')).waitReady();

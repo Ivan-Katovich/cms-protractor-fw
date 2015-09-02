@@ -31,7 +31,7 @@ var CarHireSearchGadget = function(root){
         }
     };
 
-    this.getDriversAdgeText = function(){
+    _this.getDriversAdgeText = function(){
         console.log('get drivers age text');
         return helper.elementGetter(_this._root,_this._data.elements.driversAgeLabel).getText();
     };
