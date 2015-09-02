@@ -1,7 +1,8 @@
 
 var specTimeoutMs = 15000;
 
-var ElementFinder = $('').constructor;
+//var ElementFinder = $('').constructor;
+//var ElementArrayFinder = element.ElementArrayFinder;
 
 /**
  * This is used when an element is expected to 'move' into a position.
@@ -10,7 +11,7 @@ var ElementFinder = $('').constructor;
  *
  * @returns a promise that resolves to the element
  */
-ElementFinder.prototype.waitToBeCompletelyVisibleAndStable = function () {
+protractor.ElementFinder.prototype.waitToBeCompletelyVisibleAndStable = function () {
     var self = this,
         lastXLocation,
         lastYLocation;
@@ -60,7 +61,7 @@ ElementFinder.prototype.waitToBeCompletelyVisibleAndStable = function () {
  *
  * @returns a promise that resolves to true when the element is hidden
  */
-ElementFinder.prototype.waitToBeHidden = function () {
+protractor.ElementFinder.prototype.waitToBeHidden = function () {
     var self = this;
 
     return browser.wait(function() {
@@ -77,7 +78,7 @@ ElementFinder.prototype.waitToBeHidden = function () {
  *
  * @returns a promise that resolves to the element
  */
-ElementFinder.prototype.waitReady = function() {
+protractor.ElementFinder.prototype.waitReady = function() {
     var self = this;
     return browser.wait(function() {
         return self.isPresentAndDisplayed();
@@ -92,7 +93,7 @@ ElementFinder.prototype.waitReady = function() {
  *
  * @returns a promise that resolves to true or false
  */
-ElementFinder.prototype.isPresentAndDisplayed = function () {
+protractor.ElementFinder.prototype.isPresentAndDisplayed = function () {
     var self = this;
 
     return self.isPresent().then(function (present) {
@@ -103,4 +104,36 @@ ElementFinder.prototype.isPresentAndDisplayed = function () {
         return false;
     });
 };
+
+protractor.ElementArrayFinder.prototype.isHiddenOrNotPresent = function () {
+    var self = this;
+
+    return self.count()
+        .then(function(n){
+            if (n>0){
+                self.get(0).isDisplayed()
+                    .then(function(is){
+                        return browser.sleep(1000);
+                    })
+                    .then(function(is){
+                        return (!is);
+                    });
+            }else{
+                return true;
+            }
+        });
+};
+
+protractor.ElementArrayFinder.prototype.waitForDisappeared = function() {
+    var self = this;
+    return browser.wait(function() {
+        return self.isHiddenOrNotPresent();
+    }, specTimeoutMs, 'timed out waiting for element')
+        .then(function () {
+            return self.get(0);
+        });
+};
+
+
+
 

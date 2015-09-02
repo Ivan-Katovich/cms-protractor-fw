@@ -11,12 +11,20 @@ ResultsPage.prototype._resultsData = {
         mainTitle: {
             css: '.results-summary__title',
             isSingle: true
+        },
+        loadPercentage: {
+            css: '.search-progress__percentage',
+            isSingle: false
         }
     }
 };
 
 ResultsPage.prototype.isMainTitleVisible = function(){
     return helper.elementGetter(this._root,this._resultsData.elements.mainTitle).isDisplayed();
+};
+
+ResultsPage.prototype.waitForResults = function(){
+    return helper.elementGetter(this._root,this._resultsData.elements.loadPercentage).waitForDisappeared();
 };
 
 

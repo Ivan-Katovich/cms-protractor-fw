@@ -18,6 +18,6 @@ Feature: Home page check
     And I complete 'pick-up-time' field with value '10:00'
     And I click on search button
     Then I should be taken to the 'car-hire' results page
-    When I wait for page loaded
+    When I wait for all results load
     And results page main title should be visible
 

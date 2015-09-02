@@ -29,7 +29,10 @@ var SuperHomePage = function(){
     };
 
     _this.getTitleText = function(){
-        return helper.elementGetter(_this._root,_this._data.elements.title).getText();
+        return helper.elementGetter(_this._root,_this._data.elements.title).waitReady()
+            .then(function(el){
+                return el.getText();
+            });
     };
 
     _this.initSearchGadget = function(channel){
