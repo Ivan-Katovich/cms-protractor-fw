@@ -3,7 +3,7 @@ var fieldFactory = require('./fields/fieldFactory');
 
 var SearchGadget = function(){};
 
-SearchGadget.prototype._commonData = {
+SearchGadget.prototype._searchGadgetData = {
     elements: {
         searchButton: {
             css: '.searchGadgetForm__searchGadgetForm__btn-submit',
@@ -25,7 +25,7 @@ SearchGadget.prototype.getFieldLabel = function(field){
 };
 
 SearchGadget.prototype.submitForm = function(){
-    return helper.elementGetter(this._root,this._commonData.elements.searchButton).click();
+    return helper.elementGetter(this._root,this._searchGadgetData.elements.searchButton).click();
 };
 
 module.exports = SearchGadget;

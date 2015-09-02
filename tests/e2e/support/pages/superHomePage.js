@@ -24,15 +24,15 @@ var SuperHomePage = function(){
         }
     };
 
-    this.isMainLogoVisible = function(){
+    _this.isMainLogoVisible = function(){
         return helper.elementGetter(_this._root,_this._data.elements.mainLogo).isDisplayed();
     };
 
-    this.getTitleText = function(){
+    _this.getTitleText = function(){
         return helper.elementGetter(_this._root,_this._data.elements.title).getText();
     };
 
-    this.initSearchGadget = function(channel){
+    _this.initSearchGadget = function(channel){
         var channelButtons = {
             'holidays': 0,
             'flights': 1,
@@ -46,7 +46,7 @@ var SuperHomePage = function(){
             });
     };
 
-    this.getCarHireDriversAgeText = function(){
+    _this.getCarHireDriversAgeText = function(){
         return gadgetFactory.currentSearchGadget.getDriversAdgeText();
     };
 

@@ -3,8 +3,8 @@ Feature: Home page check
   I can go to the home page
   So I can see
 
-  @test
-  Scenario: Hotels e2e scenarios from TSM home page with default parameters to hotels results page
+  @test @desktop @mobile
+  Scenario: Car-hire e2e scenarios from TSM home page with default parameters to car-hire results page
     When I navigate to the 'super-home' page
     Then the title should be 'Leave London behind'
     And the main logo should be visible
@@ -18,5 +18,6 @@ Feature: Home page check
     And I complete 'pick-up-time' field with value '10:00'
     And I click on search button
     Then I should be taken to the 'car-hire' results page
+    When I wait for page loaded
     And results page main title should be visible
 
