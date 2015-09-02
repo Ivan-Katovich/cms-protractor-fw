@@ -26,7 +26,7 @@ This install all necessary dependencies
 
 Then update webdriver:
 
-    node_modules\.bin\webdriver-manager update
+    grunt webdriver:update
 
 Then will be possible to execute tests:
 
