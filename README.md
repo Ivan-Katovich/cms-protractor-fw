@@ -30,8 +30,8 @@ Then update webdriver:
     or
     node_modules\.bin\webdriver-manager update
 
-Then will be possible to execute tests:
+Then will be possible to execute tests using runner.bat or 
 
-    grunt e2e
+    grunt e2e 
 
 
