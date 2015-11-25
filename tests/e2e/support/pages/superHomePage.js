@@ -20,6 +20,11 @@ var SuperHomePage = function(){
             channelsButtons: {
                 css: '.searchGadgetForm__channelOption',
                 isSingle: false
+            },
+            carHireButton: {
+                css: '.searchGadgetForm__channelOption',
+                text: 'Car Hire',
+                isSingle: true
             }
         }
     };

@@ -26,12 +26,7 @@ Page.prototype.submitPageForm = function(){
 };
 
 Page.prototype.waitForPageLoaded = function(){
-    _this=this;
-    return browser.waitForAngular(30000)
-        .then(function(){
-            console.log(browser.sync);
-            return _this._root.waitReady();
-        });
+    return this._root.waitReady();
 };
 
 module.exports = Page;

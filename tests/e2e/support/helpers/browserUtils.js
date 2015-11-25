@@ -5,9 +5,10 @@ var browserUtils = {
     _data: {
         timeOut: 30000,
         urlWords: {
+
             'super-home': '',
-            'car-hire': 'c/carhire/results/',
-            'hotels': 'c/hotels/results/'
+            'car-hire': '/carhire/results/',
+            'hotels': '/hotels/results/'
         }
     },
 

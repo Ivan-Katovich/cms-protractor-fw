@@ -11,7 +11,11 @@ var steps = function() {
     });
 
     this.When(/^I wait for page loaded$/, function (callback) {
+        browser.ignoreSynchronization=true;
         pageFactory.currentPage.waitForPageLoaded()
+            .then(function(){
+                browser.ignoreSynchronization=false;
+            })
             .then(callback);
     });
 

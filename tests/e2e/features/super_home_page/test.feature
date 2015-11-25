@@ -6,8 +6,8 @@ Feature: Home page check
   @test @desktop @mobile
   Scenario: Car-hire e2e scenarios from TSM home page with default parameters to car-hire results page
     When I navigate to the 'super-home' page
-    Then the title should be 'Leave London behind'
-    And the main logo should be visible
+    And I wait for page loaded
+    Then the main logo should be visible
     And say hello world
     When I select 'car-hire' search gadget
     Then car-hire driver's age text should be 'Age 25 to 75'

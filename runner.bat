@@ -1,5 +1,5 @@
 set SELENIUM_SERVER=http://localhost:4444/wd/hub
-set HOST=http://localhost:9000/beta/
+set HOST=https://www.test1-cms.gb.travelsupermarket.com/
 set PLATFORM=desktop
 
 grunt e2e
