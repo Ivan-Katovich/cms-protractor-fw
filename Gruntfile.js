@@ -38,8 +38,8 @@ module.exports = function(grunt) {
                 options: {
                     configFile: 'tests/e2e/protractor-conf.js', // Target-specific config file
                     args: {
-                        seleniumAddress: selenium||process.env.SELENIUM_SERVER,
-                        baseUrl: host||process.env.HOST,
+                        seleniumAddress: selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub',
+                        baseUrl: host||process.env.HOST||'https://www.test1-cms.gb.travelsupermarket.com/',
                         cucumberOpts: {
                             tags: ['~@ignore']
                         }
@@ -63,8 +63,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-protractor-webdriver');
 
     grunt.registerTask('e2e', 'Run e2e tests', function(target) {
-        console.log(' Run tests on platform: ');
-        console.log(platform||process.env.PLATFORM);
+        console.log(' \Test ENVIRONMENT: ');
+        console.log(host||process.env.HOST||'https://www.test1-cms.gb.travelsupermarket.com/');
+        console.log(' \Using Selenium Grid: ');
+        console.log(selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub');
+        console.log(' \nRun tests on platform: ');
+        console.log(platform||process.env.PLATFORM||'desktop');
+        console.log('\n');
         if (platform){
             process.env.PLATFORM=platform;
         }
