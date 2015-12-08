@@ -6,6 +6,13 @@ var platforms = {
 
 };
 
+//var firefox = require('./../../node_modules/protractor/node_modules/selenium-webdriver/firefox');
+//var firefoxProfile = new firefox.Profile();
+//firefoxProfile.setPreference('browser.startup.page',0);
+//firefoxProfile.setPreference('startup.homepage_welcome_url.additional','about:blank');
+
+
+
 exports.config = {
 
     specs: ['features/**/*.feature'],
@@ -17,6 +24,10 @@ exports.config = {
                 args: [platforms[process.env.PLATFORM]||platforms.desktop]
             }
         }
+        //,{
+        //    browserName: 'firefox',
+        //    firefox_profile: firefoxProfile
+        //}
     ],
 
     framework : 'cucumber',
