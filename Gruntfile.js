@@ -63,9 +63,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-protractor-webdriver');
 
     grunt.registerTask('e2e', 'Run e2e tests', function(target) {
-        console.log(' \Test ENVIRONMENT: ');
+        console.log(' \nTest ENVIRONMENT: ');
         console.log(host||process.env.HOST||'https://www.test1-cms.gb.travelsupermarket.com/');
-        console.log(' \Using Selenium Grid: ');
+        console.log(' \nUsing Selenium Grid: ');
         console.log(selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub');
         console.log(' \nRun tests on platform: ');
         console.log(platform||process.env.PLATFORM||'desktop');

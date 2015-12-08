@@ -15,5 +15,15 @@
     "protractor": "^2.1.0",
     "q": "^1.4.1",
     "scripts": "^0.1.0"
+  },
+  "scripts": {
+    "install": "node_modules\\.bin\\webdriver-manager update"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Ivan-Katovich/cms-protractor-fw.git"
   }
 }
