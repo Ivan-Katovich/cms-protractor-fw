@@ -23,7 +23,6 @@
   },
   "scripts": {
     "install": "node_modules\\.bin\\webdriver-manager update"
-//    "install": "npm run webdriverUpdate"
   },
   "engines": {
     "node": ">=0.12.0"
