@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                     configFile: 'test/e2e/protractor-conf.js',
                     args: {
                         seleniumAddress: selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub',
-                        baseUrl: testHost||process.env.HOST||envMap.test.aem+'.travelsupermarket.com/?source=TIV',
+                        baseUrl: testHost||process.env.HOST||'https://www.travelsupermarket.com/',
                         cucumberOpts: {
                             tags: ['~@ignore','<%= protractor.platformTag%>']
                         }
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                     configFile: 'test/e2e/protractor-conf.js',
                     args: {
                         seleniumAddress: selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub',
-                        baseUrl: testHost||process.env.HOST||envMap.test.aem+'.travelsupermarket.com/?source=TIV',
+                        baseUrl: testHost||process.env.HOST||'https://www.travelsupermarket.com/',
                         cucumberOpts: {
                             tags: ['@wip','<%= protractor.platformTag%>']
                         }
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
                     configFile: 'test/e2e/protractor-conf-multirun.js',
                     args: {
                         seleniumAddress: selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub',
-                        baseUrl: testHost||process.env.HOST||envMap.test.aem+'.travelsupermarket.com/?source=TIV',
+                        baseUrl: testHost||process.env.HOST||'https://www.travelsupermarket.com/',
                         cucumberOpts: {
                             tags: ['~@ignore','@desktop','@mobile','@tabletL','@tabletP','@journey']
                         }
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
                     configFile: 'test/e2e/protractor-conf-multifunc.js',
                     args: {
                         seleniumAddress: selenium||process.env.SELENIUM_SERVER||'http://localhost:4444/wd/hub',
-                        baseUrl: testHost||process.env.HOST||envMap.test.aem+'.travelsupermarket.com/?source=TIV',
+                        baseUrl: testHost||process.env.HOST||'https://www.travelsupermarket.com/',
                         cucumberOpts: {
                             tags: ['~@ignore','~@journey','<%= protractor.platformTag%>']
                         }
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
             process.env.HOST=testHost;
         }
         if(!process.env.HOST){
-            process.env.HOST=envMap.test.aem+'.travelsupermarket.com/?source=TIV';
+            process.env.HOST='https://www.travelsupermarket.com/';
         }
 
         if(process.env.PLATFORM !== 'mobile' && process.env.PLATFORM !== 'desktop' && process.env.PLATFORM !== 'tabletP' && process.env.PLATFORM !== 'tabletL'){
