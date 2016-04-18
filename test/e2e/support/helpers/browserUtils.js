@@ -1,38 +1,36 @@
 'use strict';
 
-var pageFactory = require('./../pages/pageFactory');
-var fs = require('fs');
+var BrowserUtils = function(world){
+    var _this = this;
 
-var browserUtils = {
-
-    _data: {
+    _this._data = {
         timeOut: 45000,
         urlWords: {
             'base': '.travelsupermarket.',
             'super-home': '',
-            'car-hire': '/carhire/results/',
-            'flights': '/flight/results/',
+            'car-hire': '/car-hire/results/',
+            'flights': '/flights/results/',
             'hotels': '/hotels/results/',
             'holidays': '/holidays/results/',
             'interstitial': '/interstitial/'
         }
-    },
+    };
 
-    clearLocalStorage: function (){
+    _this.clearLocalStorage = function (){
         return browser.executeScript('window.localStorage.clear();');
-    },
+    };
 
-    navigateTo: function(page,profile){
-        pageFactory.getPage(page);
-        return pageFactory.currentPage.constructUrlForPage(profile)
+    _this.navigateTo = function(page,profile){
+        world.pageFactory.getPage(page);
+        return world.pageFactory.currentPage.constructUrlForPage(profile)
             .then(function(url){
                 return browser.get(url);
             });
-    },
+    };
 
-    waitForRedirect: function(page){
+    _this.waitForRedirect = function(page){
         var _this=this;
-        return browser.sleep(3000)
+        return browser.sleep(100)
             .then(function(){
                 if(page === 'provider\'s'){
                     return browser.wait(function () {
@@ -43,7 +41,7 @@ var browserUtils = {
                     }, _this._data.timeOut, 'Was not redirected to Provider\'s site, after ' + _this._data.timeOut + 'ms');
                 }else{
                     if(_this._data.urlWords[page] === undefined){
-                        throw 'Unknown page: ' +page;
+                        throw new Error('Unknown page: ' +page);
                     }
                     return browser.wait(function () {
                             return browser.driver.getCurrentUrl()
@@ -52,14 +50,13 @@ var browserUtils = {
                                 });
                         }, _this._data.timeOut, 'Was not redirected to "' + _this._data.urlWords[page] + '", after ' + _this._data.timeOut + 'ms')
                         .then(function(){
-                            pageFactory.getPage(page);
+                            world.pageFactory.getPage(page);
                         });
                 }
             });
-    },
+    };
 
-    switchToNewWindow : function () {
-        var _this=this;
+    _this.switchToNewWindow = function () {
         return browser.wait(function () {
             return browser.getAllWindowHandles()
                 .then(function(handles){
@@ -72,9 +69,9 @@ var browserUtils = {
             .then(function(handles){
                 return browser.switchTo().window(handles[1]);
             });
-    },
+    };
 
-    returnToMainWindow : function(){
+    _this.returnToMainWindow = function(){
         return browser.getAllWindowHandles()
             .then(function(handles){
                 if(handles.length > 1){
@@ -82,15 +79,27 @@ var browserUtils = {
                     return browser.switchTo().window(handles[0]);
                 }
             });
-    },
+    };
 
-    writeScreenShot: function (data, filename) {
-        var stream = fs.createWriteStream(filename);
+    _this.writeScreenShot = function (data, filename) {
+        var stream = world.fs.createWriteStream(filename);
 
         stream.write(new Buffer(data, 'base64'));
         stream.end();
-    }
+    };
+
+    _this.getNameForScreenshot = function(scenario) {
+        var name = '';
+
+        name += process.env.CURRENT_BROWSER;
+        name += '(' + process.env.PLATFORM + ')';
+        name += '-' + scenario.getName();
+        name += '_' + world.moment().format('YYYYMMDD-HHmmssSSS');
+        name += '.png';
+
+        return name;
+    };
 
 };
 
-module.exports = browserUtils;
+module.exports = BrowserUtils;

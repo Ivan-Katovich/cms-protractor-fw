@@ -1,20 +1,18 @@
 'use strict';
 
-var browserUtils = require('./../support/helpers/browserUtils');
-//var fs = require('fs');
-var helper = require('./../support/helpers/helper');
-//var moment = require('moment');
-var q = require('q');
 var isStart = true;
 
 module.exports = function () {
 
+    // this.World = require('./../support/world.js').World;
+
     this.setDefaultTimeout(60000);
 
     this.After(function (callback) {
-        browserUtils.returnToMainWindow()
+        var _this = this;
+        _this.browserUtils.returnToMainWindow()
             .then(function(){
-                return browserUtils.clearLocalStorage();
+                return _this.browserUtils.clearLocalStorage();
             })
             .then(callback);
     });
@@ -35,38 +33,35 @@ module.exports = function () {
         }
     });
 
-    //this.After(function (scenario,callback) {
-    //    if (scenario.isFailed()) {
-    //        var folder = process.cwd() + '/test/e2e/reports/screenshots/';
-    //
-    //        if (!fs.existsSync(folder)) {
-    //            fs.mkdirSync(folder);
-    //        }
-    //
-    //        getNameForScreenshot(scenario)
-    //            .then(function (filename) {
-    //                var path = folder + filename;
-    //
-    //                browser.takeScreenshot()
-    //                    .then(function (stream) {
-    //
-    //                        console.log('Saving screenshot @ ' + path);
-    //                        browserUtils.writeScreenShot(stream, path);
-    //                    });
-    //
-    //            })
-    //            .then(callback);
-    //    }
-    //    else {
-    //        callback();
-    //    }
-    //});
+    this.After(function (scenario,callback) {
+        var _this = this;
+        if (scenario.isFailed()) {
+            var folder = process.cwd() + '/test/e2e/reports/screenshots/';
+
+            if (!_this.fs.existsSync(folder)) {
+                _this.fs.mkdirSync(folder);
+            }
+
+            browser.takeScreenshot()
+                .then(function (stream) {
+                    var path = folder + _this.browserUtils.getNameForScreenshot(scenario);
+                    console.log('\nSaving screenshot @ ' + path);
+                    _this.browserUtils.writeScreenShot(stream, path);
+                })
+                .then(function(){
+                    callback();
+                });
+        }
+        else {
+            callback();
+        }
+    });
 
     this.Before(function () {
-        var deferred = q.defer();
+        var deferred = this.q.defer();
         if(isStart) {
             isStart = false;
-            return helper.getPlatform()
+            return this.helper.getPlatform()
                 .then(function (platform) {
                     process.env.PLATFORM = platform;
                     console.log('platform ==> ' + platform);

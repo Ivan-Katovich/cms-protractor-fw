@@ -3,7 +3,7 @@ Feature: Holidays e2e Journey Test
   I can complete holidays search gadget with private data and go to the results page with suitable providers
   So there I can go to provider's site
 
-  @journey @desktop @mobile @tabletP @tabletL @wip
+  @journey @desktop @mobile @tabletP @tabletL
   Scenario: Holidays user journey
 #    When I navigate to the 'holidays' results page using 'minimum' profile
     When I navigate to the 'super-home' page

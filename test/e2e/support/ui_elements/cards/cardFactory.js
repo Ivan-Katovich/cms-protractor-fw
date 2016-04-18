@@ -1,31 +1,34 @@
 'use strict';
 
-var CarHireCard = require('./carHireCard');
-var FlightsCard = require('./flightsCard');
-var HotelsCard = require('./hotelsCard');
-var HolidaysCard = require('./holidaysCard');
+var CarHireCard = require('./carHireCard'),
+    FlightsCard = require('./flightsCard'),
+    HotelsCard = require('./hotelsCard'),
+    HolidaysCard = require('./holidaysCard');
 
-var cardFactory = {
+var CardFactory = function(world){
 
-    currentCard: undefined,
+    var _this = this;
 
-    getCard: function(card,number){
+    _this.currentCard = undefined;
+
+    _this.getCard = function(card,number){
         var cardConstructors = {
             'car-hire': CarHireCard,
             'flights': FlightsCard,
             'hotels': HotelsCard,
             'holidays': HolidaysCard
-        };
-        var cardObj = new cardConstructors[card.type](card,number);
+        },  
+            cardObj = new cardConstructors[card.type](card,number,world);
+        
         cardObj.getProviderId()
             .then(function(id){
                 cardObj.providerId = id;
             });
-        this.currentCard = cardObj;
+        _this.currentCard = cardObj;
         return cardObj;
-    }
+    };
 
 };
 
-module.exports = cardFactory;
+module.exports = CardFactory;
 

@@ -1,15 +1,13 @@
 'use strict';
 
-var helper = require('./../helpers/helper');
-var constants = require('./../helpers/constants');
-//var fieldFactory = require('./fields/fieldFactory');
-var SearchGadget = require('./searchGadget');
-var placesId = require('./../../support/helpers/placesId');
-var moment = require('moment');
+var inheritance = require('./../../../helpers/inheritance'),
+    SearchGadget = require('./searchGadget');
 
-var HotelsSearchGadget = function(root){
+var HotelsSearchGadget = function(root,world){
 
     var _this = this;
+    
+    _this.world = world;
 
     _this.marker = 'hotels';
 
@@ -30,14 +28,14 @@ var HotelsSearchGadget = function(root){
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(2,'days')
+                value: _this.world.helper.getStringDate(2,'days')
             },
             'check-out': {
                 css: '.searchGadgetForm__section--checkOutDate',
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(9,'days')
+                value: _this.world.helper.getStringDate(9,'days')
             },
             'guests': {
                 css: '.searchGadgetForm__section--hotels-guests',
@@ -124,13 +122,13 @@ var HotelsSearchGadget = function(root){
 
     _this.urlConstructor = function(){
         var url = '';
-        url += browser.baseUrl.replace(constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
+        url += browser.baseUrl.replace(_this.world.constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
         url += '/en-gb/hotels/results/';
-        url += placesId[_this._data.fields.destination.value];
+        url += _this.world.placesId[_this._data.fields.destination.value];
         url += '/';
         url += _this._data.fields['check-in'].value;
         url += '/';
-        url += moment(_this._data.fields['check-in'].value).to(_this._data.fields['check-out'].value).match(/\d{1,2}/)[0];
+        url += _this.world.moment(_this._data.fields['check-in'].value).to(_this._data.fields['check-out'].value).match(/\d{1,2}/)[0];
         url += '/?room=A';
         url += _this._data.fields.adults.value;
         if(_this._data.fields['first-child-age'].value){
@@ -162,7 +160,7 @@ var HotelsSearchGadget = function(root){
 
 };
 
-helper.inherits(SearchGadget,HotelsSearchGadget);
+inheritance.inherits(SearchGadget,HotelsSearchGadget);
 
 module.exports = HotelsSearchGadget;
 

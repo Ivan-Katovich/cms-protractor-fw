@@ -1,24 +1,22 @@
 'use strict';
 /*jshint -W030 */
 
-var pageFactory = require('./../support/pages/pageFactory');
-//var browserUtils = require('./../support/helpers/browserUtils');
-//var SuperHomePage = require('./../../support/pages/superHomePage');
-//var superHomePage = new SuperHomePage(element(by.css('body')));
-
 var steps = function(){
 
+    // this.World = require('./../support/world.js').World;
+
     this.When(/^I select '(.+)' search gadget$/, function(channel,callback) {
-        pageFactory.currentPage.clickSearchIfMobile()
+        var _this = this;
+        _this.pageFactory.currentPage.clickSearchIfMobile()
             .then(function(){
-                pageFactory.currentPage.initSearchGadget(channel);
+                _this.pageFactory.currentPage.initSearchGadget(channel);
             })
             .then(callback);
     });
 
     this.Then(/^the title should be '(.+)'$/, function (expText,callback) {
         //expect(element(by.css('.hero-section__heading-title')).getText()).to.eventually.equal('Leave London111 behind');
-        pageFactory.currentPage.getTitleText()
+        this.pageFactory.currentPage.getTitleText()
             .then(function(text){
                 expect(text).to.equal(expText);
                 callback();
@@ -26,7 +24,7 @@ var steps = function(){
     });
 
     this.Then(/^the main logo should be visible$/, function (callback) {
-        pageFactory.currentPage.isMainLogoVisible()
+        this.pageFactory.currentPage.isMainLogoVisible()
             .then(function(isVisible){
                 expect(isVisible).to.be.true;
                 callback();
@@ -34,7 +32,7 @@ var steps = function(){
     });
 
     this.Then(/^car-hire drivers age text should be '(.+)'$/, function (expText,callback) {
-        pageFactory.currentPage.getCarHireDriversAgeText()
+        this.pageFactory.currentPage.getCarHireDriversAgeText()
             .then(function(text){
                 expect(text).to.equal(expText);
                 callback();

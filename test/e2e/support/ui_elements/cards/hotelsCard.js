@@ -1,13 +1,13 @@
 'use strict';
 
-var helper = require('./../../helpers/helper');
-//var constants = require('./../../helpers/constants');
-var Card = require('./card');
-//var moment = require('moment');
+var inheritance = require('./../../helpers/inheritance'),
+    Card = require('./card');
 
-var HotelsCard = function(data,number){
+var HotelsCard = function(data,number,world){
 
     var _this = this;
+
+    _this.world = world;
 
     _this.providerId = undefined;
 
@@ -23,7 +23,7 @@ var HotelsCard = function(data,number){
 
 };
 
-helper.inherits(Card,HotelsCard);
+inheritance.inherits(Card,HotelsCard);
 
 module.exports = HotelsCard;
 

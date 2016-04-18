@@ -1,13 +1,13 @@
 'use strict';
 
-var helper = require('./../helpers/helper');
-var constants = require('./../helpers/constants');
-//var fieldFactory = require('./fields/fieldFactory');
-var SearchGadget = require('./searchGadget');
+var inheritance = require('./../../../helpers/inheritance'),
+    SearchGadget = require('./searchGadget');
 
-var FlightsSearchGadget = function(root){
+var FlightsSearchGadget = function(root,world){
 
     var _this = this;
+
+    _this.world = world;
 
     _this.marker = 'flights';
 
@@ -35,14 +35,14 @@ var FlightsSearchGadget = function(root){
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(2,'days')
+                value: _this.world.helper.getStringDate(2,'days')
             },
             'return': {
                 css: '.searchGadgetForm__section--returnDate',
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(9,'days')
+                value: _this.world.helper.getStringDate(9,'days')
             },
             'adult': {
                 css: '.searchGadgetForm__section--flightsAdults',
@@ -76,7 +76,8 @@ var FlightsSearchGadget = function(root){
                 css: '.searchGadgetForm__flights-extras-btn',
                 parent: _this._root,
                 isSingle: true,
-                type: 'button'
+                type: 'button',
+                value: false
             },
             'cabin-class': {
                 css: '.searchGadgetForm__flights-extras',
@@ -104,8 +105,8 @@ var FlightsSearchGadget = function(root){
 
     _this.urlConstructor = function(){
         var url = '';
-        url += browser.baseUrl.replace(constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
-        url += '/en-gb/flight/results/';
+        url += browser.baseUrl.replace(_this.world.constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
+        url += '/en-gb/flights/results/';
         url += _this._data.fields['flying-from'].value.match(/\([A-Z]{3}\)/)[0].replace(/[\(|\)]/g,'');
         url += '/';
         url += _this._data.fields.depart.value;
@@ -136,6 +137,6 @@ var FlightsSearchGadget = function(root){
 
 };
 
-helper.inherits(SearchGadget,FlightsSearchGadget);
+inheritance.inherits(SearchGadget,FlightsSearchGadget);
 
 module.exports = FlightsSearchGadget;

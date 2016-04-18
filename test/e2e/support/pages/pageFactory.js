@@ -1,16 +1,20 @@
 'use strict';
 
-var SuperHomePage = require('./superHomePage');
-var ResultsPage = require('./resultsPages/resultsPage');
-var CarHireResultsPage = require('./resultsPages/carHireResultsPage');
-var FlightsResultsPage = require('./resultsPages/flightsResultsPage');
-var HotelsResultsPage = require('./resultsPages/hotelsResultsPage');
-var HolidaysResultsPage = require('./resultsPages/holidaysResultsPage');
-var InterstitialPage = require('./interstitialPage');
+var SuperHomePage = require('./superHomePage'),
+    ResultsPage = require('./resultsPages/resultsPage'),
+    CarHireResultsPage = require('./resultsPages/carHireResultsPage'),
+    FlightsResultsPage = require('./resultsPages/flightsResultsPage'),
+    HotelsResultsPage = require('./resultsPages/hotelsResultsPage'),
+    HolidaysResultsPage = require('./resultsPages/holidaysResultsPage'),
+    InterstitialPage = require('./interstitialPage');
 
-var pageFactory = {
-    currentPage: 'undefined',
-    getPage: function(page){
+var PageFactory = function(world){
+    
+    var _this = this;
+
+    _this.currentPage = 'undefined';
+
+    _this.getPage = function(page){
         var pages = {
             'super-home': SuperHomePage,
             'results': ResultsPage,
@@ -18,11 +22,15 @@ var pageFactory = {
             'flights': FlightsResultsPage,
             'hotels': HotelsResultsPage,
             'holidays': HolidaysResultsPage,
-            'insurance': 'insurance',
+            'insurance': null,
             'interstitial': InterstitialPage
         };
-        this.currentPage = new pages[page]();
-    }
+        if(!pages[page]){
+            throw new Error('Wrong page name: '+pages[page]);
+        }
+        _this.currentPage = new pages[page](world);
+        return _this.currentPage.mergeData();
+    };
 };
 
-module.exports = pageFactory;
+module.exports = PageFactory;

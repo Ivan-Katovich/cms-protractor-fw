@@ -18,7 +18,7 @@ Feature: Car-Hire e2e Journey Test
     And results page url should contain the right items
     When I wait for all results load
     Then results page main title should be visible
-    When I click on the 1st result card View Deal button
+    When I click on the 2st result card View Deal button
     Then I should be taken to the 'interstitial' page in a 'new' window
     And result card provider ID and Interstitial page provider ID are the same
     And result card provider logo is displayed correct

@@ -1,14 +1,17 @@
 'use strict';
 
-var helper = require('./../../helpers/helper');
-var Field = require('./field');
+var inheritance = require('./../../helpers/inheritance'),
+    Field = require('./field');
 
-var Autocomplete = function(data){
+var Autocomplete = function(data,world){
 
     var _this = this;
 
-    //_this._root = data.parent.element(by.css(data.css));
-    _this._root = helper.elementGetter(data.parent,data);
+    _this.world = world;
+
+    _this.marker = 'autocomplete';
+    
+    _this._root = _this.world.helper.elementGetter(data.parent,data);
 
     _this.completeByValue = function(value){
         return _this._root.all(by.css('input')).get(1).sendKeys(value)
@@ -28,6 +31,6 @@ var Autocomplete = function(data){
 
 };
 
-helper.inherits(Field,Autocomplete);
+inheritance.inherits(Field,Autocomplete);
 
 module.exports = Autocomplete;

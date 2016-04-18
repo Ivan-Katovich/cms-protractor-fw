@@ -10,7 +10,7 @@
 
 exports.config = {
 
-    specs: ['features/**/*.feature'/*,'features/*.feature'*/],
+    specs: ['features/journeys/*.feature'/*,'features/*.feature'*/],
 
     multiCapabilities: [
         //{
@@ -32,13 +32,13 @@ exports.config = {
                 args: ['--window-size=768,1024']
             }
         },
-        //{
-        //    name: 'chrome_tablet_landscape',
-        //    browserName: 'chrome',
-        //    chromeOptions : {
-        //        args: ['--window-size=1024,768']
-        //    }
-        //},
+        {
+            name: 'chrome_tablet_landscape',
+            browserName: 'chrome',
+            chromeOptions : {
+                args: ['--window-size=1024,768']
+            }
+        },
         {
             name: 'chrome_desktop',
             browserName: 'chrome',
@@ -51,9 +51,11 @@ exports.config = {
     allScriptsTimeout: 100000,
     getPageTimeout: 30000,
 
-    framework : 'cucumber',
+    framework: 'custom',
+    frameworkPath: require.resolve('protractor-cucumber-framework'),
     cucumberOpts : {
         require : [
+            'support/world.js',
             'support/protractor-extensions.js',
             'step_definitions/**/*.js',
             'step_definitions/*.js',

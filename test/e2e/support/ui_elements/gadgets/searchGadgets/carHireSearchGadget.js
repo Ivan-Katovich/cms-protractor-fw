@@ -1,14 +1,13 @@
 'use strict';
 
-var helper = require('./../helpers/helper');
-var constants = require('./../helpers/constants');
-//var fieldFactory = require('./fields/fieldFactory');
-var SearchGadget = require('./searchGadget');
-var placesId = require('./../../support/helpers/placesId');
+var inheritance = require('./../../../helpers/inheritance'),
+    SearchGadget = require('./searchGadget');
 
-var CarHireSearchGadget = function(root){
+var CarHireSearchGadget = function(root,world){
 
     var _this = this;
+
+    _this.world = world;
 
     _this.marker = 'car-hire';
 
@@ -48,14 +47,14 @@ var CarHireSearchGadget = function(root){
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(2,'days')
+                value: _this.world.helper.getStringDate(2,'days')
             },
             'drop-off-date': {
                 css: '.searchGadgetForm__section--dropOffDate',
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(4,'days')
+                value: _this.world.helper.getStringDate(4,'days')
             },
             'age25-75': {
                 css: '.searchGadgetForm__carHireDriverInput--checkbox',
@@ -74,23 +73,23 @@ var CarHireSearchGadget = function(root){
         },
         profiles: {
             minimum: [
-                {'pick-up-from': 'Paris - Orly Apt (ORY), Essonne, Ile-de-France, France'}
+                {'pick-up-from': 'Madrid - Barajas Apt (MAD), Madrid, Spain'}
             ]
         }
     };
 
     _this.getDriversAdgeText = function(){
         console.log('get drivers age text');
-        return helper.elementGetter(_this._root,_this._data.elements.driversAgeLabel).getText();
+        return _this.world.helper.elementGetter(_this._root,_this._data.elements.driversAgeLabel).getText();
     };
 
     _this.urlConstructor = function(){
         var url = '';
-        url += browser.baseUrl.replace(constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
-        url += '/en-gb/carhire/results/';
-        url += placesId[_this._data.fields['pick-up-from'].value];
+        url += browser.baseUrl.replace(_this.world.constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
+        url += '/en-gb/car-hire/results/';
+        url += _this.world.placesId[_this._data.fields['pick-up-from'].value];
         url += '/';
-        url += placesId[_this._data.fields['pick-up-from'].value];
+        url += _this.world.placesId[_this._data.fields['pick-up-from'].value];
         url += '/';
         url += _this._data.fields['pick-up-date'].value;
         url += 'T';
@@ -109,6 +108,6 @@ var CarHireSearchGadget = function(root){
 
 };
 
-helper.inherits(SearchGadget,CarHireSearchGadget);
+inheritance.inherits(SearchGadget,CarHireSearchGadget);
 
 module.exports = CarHireSearchGadget;

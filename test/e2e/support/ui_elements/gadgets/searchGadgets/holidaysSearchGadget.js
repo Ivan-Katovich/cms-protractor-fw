@@ -1,14 +1,13 @@
 'use strict';
 
-var helper = require('./../helpers/helper');
-var constants = require('./../helpers/constants');
-//var fieldFactory = require('./fields/fieldFactory');
-var SearchGadget = require('./searchGadget');
-var placesId = require('./../../support/helpers/placesId');
+var inheritance = require('./../../../helpers/inheritance'),
+    SearchGadget = require('./searchGadget');
 
-var HolidaysSearchGadget = function(root){
+var HolidaysSearchGadget = function(root,world){
 
     var _this = this;
+
+    _this.world = world;
 
     _this.marker = 'holidays';
 
@@ -43,7 +42,7 @@ var HolidaysSearchGadget = function(root){
                 parent: _this._root,
                 isSingle: true,
                 type: 'datapicker',
-                value: helper.getStringDate(14,'days')
+                value: _this.world.helper.getStringDate(14,'days')
             },
             'nights': {
                 css: '.searchGadgetForm__section--holidaysDuration',
@@ -102,15 +101,15 @@ var HolidaysSearchGadget = function(root){
 
     _this.urlConstructor = function(){
         var url = '';
-        url += browser.baseUrl.replace(constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
+        url += browser.baseUrl.replace(_this.world.constants.REGEXP_BASE_URL,'$1').replace(/\/$/,'');
         url += '/en-gb/holidays/results/';
-        url += placesId[_this._data.fields['depart-from-main'].value];
+        url += _this.world.placesId[_this._data.fields['depart-from-main'].value];
         if(_this._data.fields['depart-from-first-slave'].value){
             url += ':';
-            url += placesId[_this._data.fields['depart-from-first-slave'].value];
+            url += _this.world.placesId[_this._data.fields['depart-from-first-slave'].value];
         }
         url += '/';
-        url += placesId[_this._data.fields['holiday-destination'].value];
+        url += _this.world.placesId[_this._data.fields['holiday-destination'].value];
         url += '/';
         url += _this._data.fields.depart.value;
         url += '/';
@@ -132,7 +131,7 @@ var HolidaysSearchGadget = function(root){
 
 };
 
-helper.inherits(SearchGadget,HolidaysSearchGadget);
+inheritance.inherits(SearchGadget,HolidaysSearchGadget);
 
 module.exports = HolidaysSearchGadget;
 

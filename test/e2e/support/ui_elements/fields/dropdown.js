@@ -1,14 +1,17 @@
 'use strict';
 
-var helper = require('./../../helpers/helper');
-var Field = require('./field');
+var inheritance = require('./../../helpers/inheritance'),
+    Field = require('./field');
 
-var Dropdown = function(data){
+var Dropdown = function(data,world){
 
     var _this = this;
 
-    //_this._root = data.parent.element(by.css(data.css));
-    _this._root = helper.elementGetter(data.parent,data);
+    _this.world = world;
+
+    _this.marker = 'dropdown';
+    
+    _this._root = _this.world.helper.elementGetter(data.parent,data);
 
     _this.selectByPosition = function(position){
         return _this._root.element(by.css('select')).click()
@@ -63,6 +66,6 @@ var Dropdown = function(data){
 
 };
 
-helper.inherits(Field,Dropdown);
+inheritance.inherits(Field,Dropdown);
 
 module.exports = Dropdown;

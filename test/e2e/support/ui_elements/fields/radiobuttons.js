@@ -1,14 +1,17 @@
 'use strict';
 
-var helper = require('./../../helpers/helper');
-var Field = require('./field');
+var inheritance = require('./../../helpers/inheritance'),
+    Field = require('./field');
 
-var Radiobuttons = function(data){
+var Radiobuttons = function(data,world){
 
     var _this = this;
 
-    //_this._root = data.parent.element(by.css(data.css));
-    _this._root = helper.elementGetter(data.parent,data);
+    _this.world = world;
+
+    _this.marker = 'radiobuttons';
+
+    _this._root = _this.world.helper.elementGetter(data.parent,data);
 
     _this.completeByValue = function(value){
         data.value = value;
@@ -17,6 +20,6 @@ var Radiobuttons = function(data){
 
 };
 
-helper.inherits(Field,Radiobuttons);
+inheritance.inherits(Field,Radiobuttons);
 
 module.exports = Radiobuttons;

@@ -1,8 +1,8 @@
 'use strict';
 
-var specTimeoutMs = 45000;
-var ProtractorBy = by.constructor;
-var q = require('q');
+var specTimeoutMs = 30000,
+    ProtractorBy = by.constructor,
+    q = require('q');
 
 //var ElementFinder = $('').constructor;
 //var ElementArrayFinder = element.ElementArrayFinder;
@@ -130,8 +130,8 @@ protractor.ElementFinder.prototype.scrollToAndClick = function () {
 };
 
 protractor.ElementArrayFinder.prototype.isHiddenOrNotPresent = function () {
-    var self = this;
-    var deferred = q.defer();
+    var self = this,
+        deferred = q.defer();
 
     self.count()
         .then(function(n){
@@ -148,8 +148,8 @@ protractor.ElementArrayFinder.prototype.isHiddenOrNotPresent = function () {
 };
 
 protractor.ElementArrayFinder.prototype.isPresent = function () {
-    var self = this;
-    var deferred = q.defer();
+    var self = this,
+        deferred = q.defer();
 
     self.count()
         .then(function(n){
@@ -174,8 +174,8 @@ protractor.ElementArrayFinder.prototype.waitForDisappeared = function() {
 var findByCssWithText = function(cssSelector, searchText, using) {
     using = using || document;
 
-    var elements = using.querySelectorAll(cssSelector);
-    var matches = [];
+    var elements = using.querySelectorAll(cssSelector),
+        matches = [];
     for (var i = 0; i < elements.length; ++i) {
         var element = elements[i];
         var elementText = element.textContent || element.innerText || '';

@@ -1,11 +1,9 @@
 'use strict';
 
-var moment = require('moment');
-var q = require('q');
+var Helper = function(world){
+    var _this = this;
 
-var helper = {
-
-    elementGetter: function(root,elementData){
+    _this.elementGetter = function(root,elementData){
         //console.log(elementData);
         var _element;
         if(elementData.css){
@@ -25,16 +23,9 @@ var helper = {
         }
 
         return _element;
-    },
+    };
 
-    inherits: function(Parent,Child){
-        var F = function(){};
-        F.prototype = Parent.prototype;
-        Child.prototype = new F();
-        Child.prototype.constructor = Child;
-    },
-
-    closeNotice: function(type){
+    _this.closeNotice = function(type){
         var notice = {
             cookie : {
                 css : 'cookie-notice>div',
@@ -68,9 +59,6 @@ var helper = {
                             if(is){
                                 if(notice[type].frame){
                                     return browser.driver.switchTo().frame(notice[type].frame)
-                                        //.then(function(){
-                                        //    return browser.sleep(1000);
-                                        //})
                                         .then(function(){
                                             browser.ignoreSynchronization = true;
                                             return element(by.css(notice[type].reset)).click()
@@ -88,9 +76,9 @@ var helper = {
                         });
                 }
             });
-    },
+    };
 
-    getPlatform: function(){
+    _this.getPlatform = function(){
         return browser.manage().window().getSize()
             .then(function(size){
                 switch(size.width){
@@ -106,21 +94,21 @@ var helper = {
                         return 'desktop';
                 }
             });
-    },
+    };
 
-    getStringDate: function(n,type){
-        return moment().add(n,type).format('YYYY-MM-DD');
-    },
+    _this.getStringDate = function(n,type){
+        return world.moment().add(n,type).format('YYYY-MM-DD');
+    };
 
-    prependProtocol: function (uri) {
+    _this.prependProtocol = function (uri) {
         if (uri.indexOf('//') === 0) {
             return 'http:' + uri;
         }
         return uri;
-    },
+    };
 
-    asyncLoop: function (length, func) {
-        var deferred = q.defer();
+    _this.asyncLoop = function (length, func) {
+        var deferred = world.q.defer();
         var i = 0,
             loop = function () {
                 if (i++ === length) {
@@ -130,8 +118,17 @@ var helper = {
                 return func(loop, i);
             };
         return loop();
-    }
+    };
+
+    _this.mergeObjectsWithoutSameKeys = function(firstObject,secondObject){
+        for(var objKey in secondObject){
+            if(secondObject.hasOwnProperty(objKey)){
+                firstObject[objKey] = secondObject[objKey];
+            }
+        }
+        return firstObject;
+    };
 
 };
 
-module.exports = helper;
+module.exports = Helper;

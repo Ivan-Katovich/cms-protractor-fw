@@ -1,14 +1,17 @@
 'use strict';
 
-var helper = require('./../../helpers/helper');
-var Field = require('./field');
+var inheritance = require('./../../helpers/inheritance'),
+    Field = require('./field');
 
-var Checkbox = function(data){
+var Checkbox = function(data,world){
 
     var _this = this;
 
-    //_this._root = data.parent.element(by.css(data.css));
-    _this._root = helper.elementGetter(data.parent,data);
+    _this.world = world;
+
+    _this.marker = 'checkbox';
+    
+    _this._root = _this.world.helper.elementGetter(data.parent,data);
 
     _this.clickOn = function(){
         if(data.value === true){
@@ -39,7 +42,7 @@ var Checkbox = function(data){
     };
 };
 
-helper.inherits(Field,Checkbox);
+inheritance.inherits(Field,Checkbox);
 
 module.exports = Checkbox;
 

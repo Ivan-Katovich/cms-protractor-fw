@@ -1,13 +1,13 @@
 'use strict';
 
-var helper = require('./../helpers/helper');
-var gadgetFactory = require('./../ui_elements/gadgetFactory');
-var Page = require('./page');
-var q = require('q');
+var inheritance = require('./../helpers/inheritance'),
+    Page = require('./page');
 
-var SuperHomePage = function(){
+var SuperHomePage = function(world){
 
     var _this=this;
+    
+    _this.world = world;
 
     _this.marker = 'super-home';
 
@@ -39,11 +39,11 @@ var SuperHomePage = function(){
     };
 
     _this.isMainLogoVisible = function(){
-        return helper.elementGetter(_this._root,_this._data.elements.mainLogo).isDisplayed();
+        return _this.world.helper.elementGetter(_this._root,_this._data.elements.mainLogo).isDisplayed();
     };
 
     _this.getTitleText = function(){
-        return helper.elementGetter(_this._root,_this._data.elements.title).waitReady()
+        return _this.world.helper.elementGetter(_this._root,_this._data.elements.title).waitReady()
             .then(function(el){
                 return el.getText();
             });
@@ -57,35 +57,35 @@ var SuperHomePage = function(){
             'car-hire': 3,
             'insuranse': 4
         };
-        return helper.elementGetter(_this._root,_this._data.elements.channelsButtons).get(channelButtons[channel]).waitToBeCompletelyVisibleAndStable()
+        return _this.world.helper.elementGetter(_this._root,_this._data.elements.channelsButtons).get(channelButtons[channel]).waitToBeCompletelyVisibleAndStable()
             .then(function(){
-                return helper.elementGetter(_this._root,_this._data.elements.channelsButtons).get(channelButtons[channel]).click();
+                return _this.world.helper.elementGetter(_this._root,_this._data.elements.channelsButtons).get(channelButtons[channel]).click();
             })
             .then(function(){
-                return gadgetFactory.getSearchGadget(channel);
+                return _this.world.gadgetFactory.getSearchGadget(channel);
             });
     };
 
     _this.getCarHireDriversAgeText = function(){
-        return gadgetFactory.currentSearchGadget.getDriversAdgeText();
+        return _this.world.gadgetFactory.currentGadget.getDriversAdgeText();
     };
 
     _this.clickSearchIfMobile = function(){
         if(process.env.PLATFORM === 'mobile'||process.env.PLATFORM === 'tabletP'){
-            return helper.elementGetter(_this._root,_this._data.elements.searchButton).click();
+            return _this.world.helper.elementGetter(_this._root,_this._data.elements.searchButton).click();
         }else{
             return browser.sleep(10);
         }
     };
 
     _this.constructUrlForPage = function(){
-        var deferred = q.defer();
+        var deferred = _this.world.q.defer();
         deferred.resolve(browser.baseUrl);
         return deferred.promise;
     };
 
 };
 
-helper.inherits(Page,SuperHomePage);
+inheritance.inherits(Page,SuperHomePage);
 
 module.exports = SuperHomePage;

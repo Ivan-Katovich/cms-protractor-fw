@@ -17,15 +17,17 @@ exports.config = {
 
     specs: ['features/**/*.feature'/*,'features/*.feature'*/],
 
-    multiCapabilities: [
-        {
-            name: 'chrome_'+process.env.PLATFORM,
-            browserName: 'chrome',
-            chromeOptions : {
-                args: [platforms[process.env.PLATFORM]]
-            }
+    capabilities: {
+        name: 'chrome_'+process.env.PLATFORM,
+        browserName: 'chrome',
+        // specs: ['features/carHireTests/*.feature','features/flightsTests/*.feature'/*,'features/*.feature'*/],
+        //count: 2,
+        //shardTestFiles: true,
+        //maxInstances: 8,
+        chromeOptions : {
+            args: [platforms[process.env.PLATFORM]]
         }
-    ],
+    },
 
     allScriptsTimeout: 100000,
     getPageTimeout: 30000,
@@ -34,6 +36,7 @@ exports.config = {
     frameworkPath: require.resolve('protractor-cucumber-framework'),
     cucumberOpts : {
         require : [
+            'support/world.js',
             'support/protractor-extensions.js',
             'step_definitions/**/*.js',
             'step_definitions/*.js',

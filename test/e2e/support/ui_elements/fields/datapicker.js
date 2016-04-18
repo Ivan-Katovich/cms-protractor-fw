@@ -1,13 +1,17 @@
 'use strict';
 
-var helper = require('./../../helpers/helper');
-var Field = require('./field');
-var moment = require('moment');
-var constants = require('./../../helpers/constants');
+var inheritance = require('./../../helpers/inheritance'),
+    Field = require('./field');
 
-var DataPicker = function(data){
+var DataPicker = function(data,world){
 
     var _this = this;
+
+    _this.world = world;
+
+    _this.marker = 'datapicker';
+
+    _this._root = _this.world.helper.elementGetter(data.parent,data);
 
     _this._data = {
         elements: {
@@ -38,20 +42,17 @@ var DataPicker = function(data){
         }
     };
 
-    //_this._root = data.parent.element(by.css(data.css));
-    _this._root = helper.elementGetter(data.parent,data);
-
     _this.selectDayFromNextMonth = function(value){
         var valueOut = value<10 ? '0'+value : value;
-        var date = moment().add(1,'months');
+        var date = _this.world.moment().add(1,'months');
         data.value = date.format('YYYY-MM-'+valueOut);
         console.log('Date will be: '+date.format('YYYY-MM-'+valueOut));
         return _this._root.element(by.css('.searchGadgetForm__datePicker-wrapper>input')).click()
             .then(function(){
-                return helper.elementGetter(_this._root,_this._data.elements.holder).waitReady();
+                return _this.world.helper.elementGetter(_this._root,_this._data.elements.holder).waitReady();
             })
             .then(function(){
-                var years = helper.elementGetter(_this._root,_this._data.elements.years);
+                var years = _this.world.helper.elementGetter(_this._root,_this._data.elements.years);
                 years.element(by.cssWithText('option',date.format('YYYY'))).getAttribute('selected')
                     .then(function(attr){
                         if(!attr){
@@ -63,7 +64,7 @@ var DataPicker = function(data){
                     });
             })
             .then(function(){
-                var months = helper.elementGetter(_this._root,_this._data.elements.months);
+                var months = _this.world.helper.elementGetter(_this._root,_this._data.elements.months);
                 months.element(by.cssWithText('option',date.format('MMMM'))).getAttribute('selected')
                     //var month = helper.elementGetter(_this._root,_this._data.elements.months).element(by.cssWithText('option',date.format('MMMM')));
                     .then(function(attr){
@@ -77,13 +78,13 @@ var DataPicker = function(data){
                     });
             })
             .then(function(){
-                return helper.elementGetter(_this._root,_this._data.elements.holder).scrollIntoView(false)
+                return _this.world.helper.elementGetter(_this._root,_this._data.elements.holder).scrollIntoView(false)
                     .then(function(){
-                        return helper.elementGetter(_this._root,_this._data.elements.days).element(by.cssWithText('.picker__day',value)).click();
+                        return _this.world.helper.elementGetter(_this._root,_this._data.elements.days).element(by.cssWithText('.picker__day',value)).click();
                     });
             })
             .then(function(){
-                helper.elementGetter(_this._root,_this._data.elements.holder).waitToBeHidden();
+                _this.world.helper.elementGetter(_this._root,_this._data.elements.holder).waitToBeHidden();
             });
             //.then(function(){
             //    console.log('sleep ==============');
@@ -92,11 +93,11 @@ var DataPicker = function(data){
     };
 
     var creteDateByValue = function(value){
-        var date = moment();
+        var date = _this.world.moment();
         console.log('value = '+value);
-        var day = value.replace(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$1') ? value.replace(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$1').match(/[+|-]?\d{1,2}/)[0] : date.format('DD');
-        var month = value.replace(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$2') ? value.replace(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$2').match(/[+|-]?\d{1,2}/)[0] : date.format('MM');
-        var year = value.replace(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$3') ? value.replace(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$3').match(/[+|-]?\d{1,4}/)[0] : date.format('YYYY');
+        var day = value.replace(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$1') ? value.replace(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$1').match(/[+|-]?\d{1,2}/)[0] : date.format('DD');
+        var month = value.replace(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$2') ? value.replace(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$2').match(/[+|-]?\d{1,2}/)[0] : date.format('MM');
+        var year = value.replace(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$3') ? value.replace(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE, '$3').match(/[+|-]?\d{1,4}/)[0] : date.format('YYYY');
         if(day.match(/[+|-]/)){
             day = date.add(day*1,'days').format('DD');
         }
@@ -106,21 +107,20 @@ var DataPicker = function(data){
         if(year.match(/[+|-]/)){
             year = date.add(year*1,'years').format('YYYY');
         }
-        console.log(year+'-'+month+'-'+day+' ==========================');
-        return moment(year+'-'+month+'-'+day);
+        return _this.world.moment(year+'-'+month+'-'+day);
     };
 
     /* correct value for this function should match /^(d:[+|-]?\d{1,2})?\/?(m:[+|-]?\d{1,2})?\/?(y:[+|-]?\d{1,4})?$/ regexp */
     _this.completeByValue = function(value){
-        if(value.match(constants.REGEXP_TO_PARSE_DATAPICKER_VALUE)){
+        if(value.match(_this.world.constants.REGEXP_TO_PARSE_DATAPICKER_VALUE)){
             var date = creteDateByValue(value);
             data.value = date.format('YYYY-MM-DD');
             return _this._root.element(by.css('.searchGadgetForm__datePicker-wrapper>input')).click()
                 .then(function(){
-                    return helper.elementGetter(_this._root,_this._data.elements.holder).waitReady();
+                    return _this.world.helper.elementGetter(_this._root,_this._data.elements.holder).waitReady();
                 })
                 .then(function(){
-                    var years = helper.elementGetter(_this._root,_this._data.elements.years);
+                    var years = _this.world.helper.elementGetter(_this._root,_this._data.elements.years);
                     years.element(by.cssWithText('option',date.format('YYYY'))).getAttribute('selected')
                         .then(function(attr){
                             if(!attr){
@@ -132,7 +132,7 @@ var DataPicker = function(data){
                         });
                 })
                 .then(function(){
-                    var months = helper.elementGetter(_this._root,_this._data.elements.months);
+                    var months = _this.world.helper.elementGetter(_this._root,_this._data.elements.months);
                     months.element(by.cssWithText('option',date.format('MMMM'))).getAttribute('selected')
                         //var month = helper.elementGetter(_this._root,_this._data.elements.months).element(by.cssWithText('option',date.format('MMMM')));
                         .then(function(attr){
@@ -146,21 +146,21 @@ var DataPicker = function(data){
                         });
                 })
                 .then(function(){
-                    return helper.elementGetter(_this._root,_this._data.elements.holder).scrollIntoView(false)
+                    return _this.world.helper.elementGetter(_this._root,_this._data.elements.holder).scrollIntoView(false)
                         .then(function(){
-                            return helper.elementGetter(_this._root,_this._data.elements.days).element(by.cssWithText('.picker__day',date.format('D'))).click();
+                            return _this.world.helper.elementGetter(_this._root,_this._data.elements.days).element(by.cssWithText('.picker__day',date.format('D'))).click();
                         });
                 })
                 .then(function(){
-                    helper.elementGetter(_this._root,_this._data.elements.holder).waitToBeHidden();
+                    _this.world.helper.elementGetter(_this._root,_this._data.elements.holder).waitToBeHidden();
                 });
         }else{
-            throw 'Not correct value for Datapicker: '+value;
+            throw new Error('Not correct value for Datapicker: '+value);
         }
     };
 
 };
 
-helper.inherits(Field,DataPicker);
+inheritance.inherits(Field,DataPicker);
 
 module.exports = DataPicker;
