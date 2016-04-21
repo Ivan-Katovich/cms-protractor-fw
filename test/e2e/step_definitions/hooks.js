@@ -24,8 +24,7 @@ module.exports = function () {
                     var decodedImage = new Buffer(stream, 'base64').toString('binary');
                     scenario.attach(decodedImage, 'image/png');
                     deferred.resolve();
-                })
-                .then(callback);
+                });
         }
         else {
             deferred.resolve();

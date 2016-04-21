@@ -129,6 +129,12 @@ var Helper = function(world){
         return firstObject;
     };
 
+    _this.emptyPromise = function(){
+        var deferred = world.q.defer();
+        deferred.resolve();
+        return deferred.promise;
+    };
+
 };
 
 module.exports = Helper;
