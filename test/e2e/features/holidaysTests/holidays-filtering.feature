@@ -36,14 +36,9 @@ Feature: Holidays filtering results
     And I complete 'board-basis' field with value 'Room Only'
     Then displayed offers number should be less then remembered
     And displayed properties number should be less or equals to remembered
-    When I remember the text value of 'filters-button' field
-    And I complete 'board-basis' field with value 'Breakfast Included (B&B)'
-    Then displayed offers number should be more then remembered
-    And displayed properties number should be more or equals to remembered
-    When I remember the text value of 'filters-button' field
     And I clear 'board-basis' filter
-    Then displayed offers number should be more then remembered
-    And displayed properties number should be more or equals to remembered
+    Then displayed offers number should be the same as remembered
+    And displayed properties number should be the same as remembered
 
   @filtering @desktop
   Scenario: Holidays stars filter
@@ -143,20 +138,20 @@ Feature: Holidays filtering results
   Scenario: Holidays outbound takeoff filter
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'outbound-takeoff' field in gadget
-    And I move 'left' of 'outbound-takeoff' slider on '80' pixels
-    Then displayed offers number should be less then remembered
+    And I move 'left' of 'outbound-takeoff' slider on '40' pixels
+    Then displayed offers number should be less or equals to remembered
     And displayed properties number should be less or equals to remembered
     And the 'outbound-takeoff' field text in gadget and the remembered value should be different
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'outbound-takeoff' field in gadget
-    And I move 'right' of 'outbound-takeoff' slider on '-60' pixels
-    Then displayed offers number should be less then remembered
+    And I move 'right' of 'outbound-takeoff' slider on '-40' pixels
+    Then displayed offers number should be less or equals to remembered
     And displayed properties number should be less or equals to remembered
     And the 'outbound-takeoff' field text in gadget and the remembered value should be different
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'outbound-takeoff' field in gadget
     When I clear 'outbound-takeoff' filter
-    Then displayed offers number should be more then remembered
+    Then displayed offers number should be more or equals to remembered
     And displayed properties number should be more or equals to remembered
     And the 'outbound-takeoff' field text in gadget and the remembered value should be different
 
@@ -164,20 +159,20 @@ Feature: Holidays filtering results
   Scenario: Holidays inbound takeoff filter
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'inbound-takeoff' field in gadget
-    And I move 'left' of 'inbound-takeoff' slider on '80' pixels
+    And I move 'left' of 'inbound-takeoff' slider on '40' pixels
     Then displayed offers number should be less or equals to remembered
     And displayed properties number should be less or equals to remembered
     And the 'inbound-takeoff' field text in gadget and the remembered value should be different
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'inbound-takeoff' field in gadget
-    And I move 'right' of 'inbound-takeoff' slider on '-80' pixels
+    And I move 'right' of 'inbound-takeoff' slider on '-40' pixels
     Then displayed offers number should be less or equals to remembered
     And displayed properties number should be less or equals to remembered
     And the 'inbound-takeoff' field text in gadget and the remembered value should be different
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'inbound-takeoff' field in gadget
     When I clear 'inbound-takeoff' filter
-    Then displayed offers number should be more then remembered
+    Then displayed offers number should be more or equals to remembered
     And displayed properties number should be more or equals to remembered
     And the 'inbound-takeoff' field text in gadget and the remembered value should be different
 
@@ -185,7 +180,7 @@ Feature: Holidays filtering results
   Scenario: Holidays outbound duration filter
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'outbound-duration' field in gadget
-    And I move 'left' of 'outbound-duration' slider on '90' pixels
+    And I move 'left' of 'outbound-duration' slider on '40' pixels
     Then displayed offers number should be less or equals to remembered
     And displayed properties number should be less or equals to remembered
     And the 'outbound-duration' field text in gadget and the remembered value should be different
@@ -198,7 +193,7 @@ Feature: Holidays filtering results
   Scenario: Holidays inbound duration filter
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'inbound-duration' field in gadget
-    And I move 'left' of 'inbound-duration' slider on '90' pixels
+    And I move 'left' of 'inbound-duration' slider on '40' pixels
     Then displayed offers number should be less or equals to remembered
     And displayed properties number should be less or equals to remembered
     And the 'inbound-duration' field text in gadget and the remembered value should be different

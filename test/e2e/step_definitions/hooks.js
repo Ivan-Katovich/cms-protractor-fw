@@ -4,8 +4,6 @@ var isStart = true;
 
 module.exports = function () {
 
-    // this.World = require('./../support/world.js').World;
-
     this.setDefaultTimeout(60000);
 
     this.After(function () {

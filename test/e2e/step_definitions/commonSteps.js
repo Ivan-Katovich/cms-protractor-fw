@@ -3,131 +3,104 @@
 
 var steps = function() {
 
-    // this.World = require('./../support/world.js').World;
-
-    this.When(/^I wait for page loaded$/, function (callback) {
+    this.When(/^I wait for page loaded$/, function () {
         browser.ignoreSynchronization=true;
-        this.pageFactory.currentPage.waitForPageLoaded()
+        return this.pageFactory.currentPage.waitForPageLoaded()
             .then(function(){
                 browser.ignoreSynchronization=false;
-            })
-            .then(callback);
+                var deferred = this.q.defer();
+                deferred.resolve();
+                return deferred.promise;
+            });
     });
 
-    this.When(/^I remember the text value of '(.+)' (field|element)(?: in |)(gadget|)$/, function (obj,objType,gadget,callback) {
+    this.When(/^I remember the text value of '(.+)' (field|element)(?: in |)(gadget|)$/, function (obj,objType,gadget) {
         var _this = this,
             objGroup = objType+'s';
-        this.pageFactory.currentPage.getTextValueOf(objGroup,obj,gadget)
+        return this.pageFactory.currentPage.getTextValueOf(objGroup,obj,gadget)
             .then(function(text){
                 _this.memory.text[obj]=text;
                 _this.memory.numbers[obj]=text.match(/\d+/g);
                 console.log('remember: '+text);
-                callback();
+                var deferred = _this.q.defer();
+                deferred.resolve();
+                return deferred.promise;
             });
     });
 
-    this.When(/^I select '(.+)'(?:st|th|nd|rd) option in the '(.+)' dropdown field$/, function (position,field,callback) {
+    this.When(/^I select '(.+)'(?:st|th|nd|rd) option in the '(.+)' dropdown field$/, function (position,field) {
         position=position-1;
-        this.pageFactory.currentPage.selectGadgetDropdownByPosition(field,position)
-            .then(callback);
+        return this.pageFactory.currentPage.selectGadgetDropdownByPosition(field,position);
     });
 
-    this.When(/^I select option with value '(.+)' in the '(.+)'(?:st|th|nd|rd|) option group in the '(.+)' dropdown field$/, function (value,group,field,callback) {
-        this.pageFactory.currentPage.selectGadgetDropdownByGroupAndValue(field,group,value)
-            .then(callback);
+    this.When(/^I select option with value '(.+)' in the '(.+)'(?:st|th|nd|rd|) option group in the '(.+)' dropdown field$/, function (value,group,field) {
+        return this.pageFactory.currentPage.selectGadgetDropdownByGroupAndValue(field,group,value);
     });
 
-    this.When(/^I select '(.+)' option in the '(.+)' radiobuttons field$/, function(label,field,callback) {
-        this.pageFactory.currentPage.selectGadgetRadiobuttonByLabel(field,label)
-            .then(callback);
+    this.When(/^I select '(.+)' option in the '(.+)' radiobuttons field$/, function(label,field) {
+        return this.pageFactory.currentPage.selectGadgetRadiobuttonByLabel(field,label);
     });
 
-    this.When(/^I complete '(.+)' field with value '(.+)'$/, function (field,value,callback) {
+    this.When(/^I complete '(.+)' field with value '(.+)'$/, function (field,value) {
         if(value === 'true'){
             value = true;
         }
         if(value === 'false'){
             value = false;
         }
-        this.pageFactory.currentPage.completeGadgetFieldByValue(field,value)
-            .then(callback);
+        return this.pageFactory.currentPage.completeGadgetFieldByValue(field,value);
     });
 
-    this.When(/^I complete current Search Gadget fields using '(.+)' profile$/, function (profileName,callback) {
-        this.pageFactory.currentPage.completeGadgetByProfile(profileName)
-            //.then(function(chain){
-            //    chain();
-            //})
-            .then(function(){
-                callback();
-            });
+    this.When(/^I complete current Search Gadget fields using '(.+)' profile$/, function (profileName) {
+        return this.pageFactory.currentPage.completeGadgetByProfile(profileName);
     });
 
-    this.When(/^I click on '(.+)'( gadget|) button$/, function (button,gadget,callback) {
-        this.pageFactory.currentPage.clickButton(button,gadget)
-            .then(callback);
+    this.When(/^I click on '(.+)'( gadget|) button$/, function (button,gadget) {
+        return this.pageFactory.currentPage.clickButton(button,gadget);
     });
 
-    this.When(/^I click on search button$/, function (callback) {
-        this.pageFactory.currentPage.submitGadgetForm()
-            .then(callback);
+    this.When(/^I click on search button$/, function () {
+        return this.pageFactory.currentPage.submitGadgetForm();
     });
 
-    this.When(/^I select (.+)(?:st|th|nd|rd) day of the next month for the '(.+)'$/, function(day, field, callback) {
-        this.pageFactory.currentPage.selectGadgetDatapickerDayInNextMonth(field,day)
-            .then(callback);
+    this.When(/^I select (.+)(?:st|th|nd|rd) day of the next month for the '(.+)'$/, function(day, field) {
+        return this.pageFactory.currentPage.selectGadgetDatapickerDayInNextMonth(field,day);
     });
 
-    this.Then(/^label of the '(.+)' field should be '(.+)'$/, function (field,expText,callback) {
-        this.pageFactory.currentPage.getGadgetFieldLabel(field)
+    this.Then(/^label of the '(.+)' field should be '(.+)'$/, function (field,expText) {
+        return this.pageFactory.currentPage.getGadgetFieldLabel(field)
             .then(function(text){
-                expect(text).to.equal(expText);
-                callback();
+                return expect(text).to.equal(expText);
             });
     });
 
-    this.Then(/^the '(.+)' (field|element) text(?: in |)(gadget|) and the remembered value should be (the same|different)$/, function (obj,objType,gadget,comporator,callback) {
+    this.Then(/^the '(.+)' (field|element) text(?: in |)(gadget|) and the remembered value should be (the same|different)$/, function (obj,objType,gadget,comporator) {
         var _this = this,
             objGroup = objType + 's';
-        this.pageFactory.currentPage.getTextValueOf(objGroup,obj,gadget)
+        return _this.pageFactory.currentPage.getTextValueOf(objGroup,obj,gadget)
             .then(function(text){
                 if(comporator === 'different'){
-                    expect(_this.memory.text[obj]).to.not.equal(text);
-                    callback();
+                    return expect(_this.memory.text[obj]).to.not.equal(text);
                 }else{
-                    expect(_this.memory.text[obj]).to.equal(text);
-                    callback();
+                    return expect(_this.memory.text[obj]).to.equal(text);
                 }
             });
     });
 
-    this.Then(/^the '(.+)' (field|element)(?: in |)(gadget|) should be (visible|not visible)$/, function (obj,objType,gadget,visibility,callback) {
+    this.Then(/^the '(.+)' (field|element)(?: in |)(gadget|) should be (visible|not visible)$/, function (obj,objType,gadget,visibility) {
         var objGroup = objType + 's';
-        this.pageFactory.currentPage.isObjectVisible(objGroup,obj,gadget)
+        return this.pageFactory.currentPage.isObjectVisible(objGroup,obj,gadget)
             .then(function(is){
                 if(visibility === 'visible'){
-                    expect(is).to.be.true;
-                    callback();
+                    return expect(is).to.be.true;
                 }else{
-                    expect(is).to.be.false;
-                    callback();
+                    return expect(is).to.be.false;
                 }
             });
     });
 
-    this.Then(/^say hello$/, function (callback) {
-        this.pageFactory.currentPage.sayHello()
-            .then(function(){
-                callback();
-            });
-    });
-
-    this.Then(/^say hello '(.+)' eq '(.+)'$/, function (x,y,callback) {
-        this.pageFactory.currentPage.sayHello()
-            .then(function(){
-                expect(x).to.equal(y);
-                callback();
-            });
+    this.Then(/^say hello$/, function () {
+        return this.pageFactory.currentPage.sayHello();
     });
 
 };

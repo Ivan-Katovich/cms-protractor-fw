@@ -2,8 +2,6 @@
 
 var steps = function() {
 
-    // this.World = require('./../support/world.js').World;
-
     this.When(/^I navigate to the '(.+)' (?:|results )page(?:| using '(.+)' profile)$/, function (page,profile) {
         var _this = this;
         return _this.browserUtils.navigateTo(page,profile)

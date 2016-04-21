@@ -5,37 +5,33 @@ var steps = function(){
 
     // this.World = require('./../support/world.js').World;
 
-    this.When(/^I select '(.+)' search gadget$/, function(channel,callback) {
+    this.When(/^I select '(.+)' search gadget$/, function(channel) {
         var _this = this;
-        _this.pageFactory.currentPage.clickSearchIfMobile()
+        return _this.pageFactory.currentPage.clickSearchIfMobile()
             .then(function(){
                 _this.pageFactory.currentPage.initSearchGadget(channel);
-            })
-            .then(callback);
+            });
     });
 
-    this.Then(/^the title should be '(.+)'$/, function (expText,callback) {
+    this.Then(/^the title should be '(.+)'$/, function (expText) {
         //expect(element(by.css('.hero-section__heading-title')).getText()).to.eventually.equal('Leave London111 behind');
-        this.pageFactory.currentPage.getTitleText()
+        return this.pageFactory.currentPage.getTitleText()
             .then(function(text){
-                expect(text).to.equal(expText);
-                callback();
+                return expect(text).to.equal(expText);
             });
     });
 
-    this.Then(/^the main logo should be visible$/, function (callback) {
-        this.pageFactory.currentPage.isMainLogoVisible()
+    this.Then(/^the main logo should be visible$/, function () {
+        return this.pageFactory.currentPage.isMainLogoVisible()
             .then(function(isVisible){
-                expect(isVisible).to.be.true;
-                callback();
+                return expect(isVisible).to.be.true;
             });
     });
 
-    this.Then(/^car-hire drivers age text should be '(.+)'$/, function (expText,callback) {
-        this.pageFactory.currentPage.getCarHireDriversAgeText()
+    this.Then(/^car-hire drivers age text should be '(.+)'$/, function (expText) {
+        return this.pageFactory.currentPage.getCarHireDriversAgeText()
             .then(function(text){
-                expect(text).to.equal(expText);
-                callback();
+                return expect(text).to.equal(expText);
             });
     });
 
