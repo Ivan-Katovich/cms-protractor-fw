@@ -8,7 +8,7 @@ Feature: Hotels filtering results
     Given results page url should contain the right items
     Given I open 'Filters Panel'
 
-  @filtering @desktop
+  @filtering @desktop @wip
   Scenario: Hotels stars filter
     Then the 'show-all-button' field should be not visible
     When I remember the text value of 'filters-button' field
@@ -28,7 +28,7 @@ Feature: Hotels filtering results
     And the displayed number of filtered results should be the same as remembered all results number
     And the 'show-all-button' field should be not visible
 
-  @filtering @desktop
+  @filtering @desktop @wip
   Scenario: Hotels guest rating filter
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'guest-rating' field in gadget
@@ -40,7 +40,7 @@ Feature: Hotels filtering results
     And the displayed number of filtered results should be the same as remembered all results number
     And the 'guest-rating' field text in gadget and the remembered value should be the same
 
-  @filtering @desktop
+  @filtering @desktop @wip
   Scenario: Hotels price filter
     When I remember the text value of 'filters-button' field
     And I remember the text value of 'price' field in gadget

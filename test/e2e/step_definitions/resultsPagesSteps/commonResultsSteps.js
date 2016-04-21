@@ -149,9 +149,9 @@ var steps = function(){
             });
     });
 
-    this.Then(/^the displayed number of (filtered|all) results should be (less or equals to|more or equals to|more then|less then|the same as) remembered (filtered|all) results number$/, function (displayedRes,comparator,rememberedRes,callback) {
+    this.Then(/^the displayed number of (filtered|all) results should be (less or equals to|more or equals to|more then|less then|the same as) remembered (filtered|all) results number$/, function (displayedRes,comparator,rememberedRes) {
         var _this = this;
-        _this.pageFactory.currentPage.getTextValueOf('fields','filters-button')
+        return _this.pageFactory.currentPage.getTextValueOf('fields','filters-button')
             .then(function(text) {
                 if (displayedRes === 'filtered') {
                     return text.match(/\d+/g)[0];
@@ -176,26 +176,22 @@ var steps = function(){
             })
             .then(function(dataObject){
                 console.log(dataObject);
+                // var deferred = _this.q.defer();
                 switch(comparator){
                     case 'the same as':
-                        expect(dataObject.displayed*1).to.equal(dataObject.remembered*1);
-                        break;
+                        return expect(dataObject.displayed*1).to.equal(dataObject.remembered*1);
                     case 'less then':
-                        expect(dataObject.displayed*1).to.be.below(dataObject.remembered*1);
-                        break;
+                        return expect(dataObject.displayed*1).to.be.below(dataObject.remembered*1);
                     case 'more then':
-                        expect(dataObject.displayed*1).to.be.above(dataObject.remembered*1);
-                        break;
+                        return expect(dataObject.displayed*1).to.be.above(dataObject.remembered*1);
                     case 'more or equals to':
-                        expect(dataObject.displayed*1).to.be.at.least(dataObject.remembered*1);
-                        break;
+                        return expect(dataObject.displayed*1).to.be.at.least(dataObject.remembered*1);
                     case 'less or equals to':
-                        expect(dataObject.displayed*1).to.be.at.most(dataObject.remembered*1);
-                        break;
+                        return expect(dataObject.displayed*1).to.be.at.most(dataObject.remembered*1);
                     default:
                         throw new Error('Wrong type of comparing: '+comparator);
                 }
-                callback();
+                // return deferred.promise;
             });
     });
 
