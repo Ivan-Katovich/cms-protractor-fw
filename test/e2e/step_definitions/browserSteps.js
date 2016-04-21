@@ -4,89 +4,79 @@ var steps = function() {
 
     // this.World = require('./../support/world.js').World;
 
-    this.When(/^I navigate to the '(.+)' (?:|results )page(?:| using '(.+)' profile)$/, function (page,profile,callback) {
+    this.When(/^I navigate to the '(.+)' (?:|results )page(?:| using '(.+)' profile)$/, function (page,profile) {
         var _this = this;
-        _this.browserUtils.navigateTo(page,profile)
+        return _this.browserUtils.navigateTo(page,profile)
             .then(function(){
-                browser.ignoreSynchronization=true;
+                return browser.ignoreSynchronization=true;
             })
             .then(function(){
-                _this.pageFactory.currentPage.waitForPageLoaded();
+                return _this.pageFactory.currentPage.waitForPageLoaded();
             })
             .then(function(){
-                browser.ignoreSynchronization=false;
-            })
-            .then(function(){
-                return browser.sleep(500);
-            })
-            .then(function(){
-                _this.helper.closeNotice('edr');
+                return browser.ignoreSynchronization=false;
             })
             .then(function(){
                 return browser.sleep(500);
             })
             .then(function(){
-                _this.helper.closeNotice('suitcase');
+                return _this.helper.closeNotice('edr');
             })
             .then(function(){
-                _this.helper.closeNotice('cookie');
+                return browser.sleep(500);
             })
             .then(function(){
-                _this.helper.closeNotice('error');
+                return _this.helper.closeNotice('suitcase');
             })
             .then(function(){
-                callback();
+                return _this.helper.closeNotice('cookie');
+            })
+            .then(function(){
+                return _this.helper.closeNotice('error');
             });
     });
 
-    this.Then(/^I should be taken to the '(.+)' (?:|results )(?:page|site) in (?:a|the) '(new|same)' window$/, function (page,window,callback) {
+    this.Then(/^I should be taken to the '(.+)' (?:|results )(?:page|site) in (?:a|the) '(new|same)' window$/, function (page,window) {
         var _this = this;
         if(page === 'provider\'s'){
-            _this.browserUtils.waitForRedirect(page)
-                //.then(function(){
-                //    console.log('Coming to the provider\'s site');
-                //    browser.sleep(1000);
-                //})
-                .then(function(){
-                    callback();
-                });
+            return _this.browserUtils.waitForRedirect(page);
         }else{
             if(window === 'new'){
-                _this.browserUtils.switchToNewWindow()
+                return _this.browserUtils.switchToNewWindow()
                     .then(function(){
-                        _this.browserUtils.waitForRedirect(page);
+                        return _this.browserUtils.waitForRedirect(page);
                     })
                     .then(function(){
-                        browser.ignoreSynchronization=true;
+                        return browser.ignoreSynchronization=true;
                     })
                     .then(function(){
-                        _this.pageFactory.currentPage.waitForPageLoaded();
+                        return _this.pageFactory.currentPage.waitForPageLoaded();
                     })
                     .then(function(){
                         browser.ignoreSynchronization=false;
-                    })
-                    .then(callback);
+                        var deferred = _this.q.defer();
+                        deferred.resolve();
+                        return deferred.promise;
+                    });
             }else{
-                _this.browserUtils.waitForRedirect(page)
+                return _this.browserUtils.waitForRedirect(page)
                     .then(function(){
-                        browser.ignoreSynchronization=true;
+                        return browser.ignoreSynchronization=true;
                     })
                     .then(function(){
-                        _this.pageFactory.currentPage.waitForPageLoaded();
+                        return _this.pageFactory.currentPage.waitForPageLoaded();
                     })
                     .then(function(){
-                        browser.ignoreSynchronization=false;
+                        return browser.ignoreSynchronization=false;
                     })
                     .then(function(){
-                        _this.helper.closeNotice('fancybox');
+                        return _this.helper.closeNotice('fancybox');
                     })
                     .then(function(){
-                        _this.helper.closeNotice('error');
-                    })
-                    .then(callback);
+                        return _this.helper.closeNotice('error');
+                    });
             }
         }
-
     });
 
 };

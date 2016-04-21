@@ -45,7 +45,7 @@ var Helper = function(world){
             },
             edr : {
                 css: '#edr_lwrap_first',
-                reset: 'a.close',
+                reset: 'a#no_button',
                 frame: 'edr_l_first'
             }
         };

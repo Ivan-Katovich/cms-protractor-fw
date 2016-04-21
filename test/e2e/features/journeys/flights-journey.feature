@@ -3,7 +3,7 @@ Feature: Flights e2e Journey Test
   I can complete flights search gadget with private data and go to the results page with suitable providers
   So there I can go to provider's site
 
-  @journey @desktop @mobile @tabletP @tabletL
+  @journey @desktop @mobile @tabletP @tabletL @wip
   Scenario: Return Flights user journey
     When I navigate to the 'super-home' page
     Then the main logo should be visible
@@ -27,7 +27,7 @@ Feature: Flights e2e Journey Test
     And result card provider logo is displayed correct
     And I should be taken to the 'provider's' site in the 'same' window
 
-  @journey @desktop @mobile @tabletP @tabletL
+  @journey @desktop @mobile @tabletP @tabletL @wip
   Scenario: One way Flights user journey
     When I navigate to the 'super-home' page
     Then the main logo should be visible

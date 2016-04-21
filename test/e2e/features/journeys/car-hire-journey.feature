@@ -3,7 +3,7 @@ Feature: Car-Hire e2e Journey Test
   I can complete car-hire search gadget with private data and go to the results page with suitable providers
   So there I can go to provider's site
 
-  @journey @desktop @mobile @tabletP @tabletL
+  @journey @desktop @mobile @tabletP @tabletL @wip
   Scenario: Car-hire user journey
     When I navigate to the 'super-home' page
     Then the main logo should be visible
