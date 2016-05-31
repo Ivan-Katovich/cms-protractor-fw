@@ -8,7 +8,7 @@ Feature: Flights e2e Journey Test
     When I navigate to the 'super-home' page
     Then the main logo should be visible
     And I select 'flights' search gadget
-    And I complete 'flying-from' field with value 'Manchester'
+    And I complete 'flying-from111' field with value 'Manchester'
 #    And I click on 'show-cabin-class' button
 #    And I click on 'type-of-flight' button
     And I complete 'flying-to' field with value 'Madrid'
