@@ -43,7 +43,7 @@ exports.config = {
             'step_definitions/*.js',
             'cucumber-reporting.js'
         ],
-        format : 'rerun:test/e2e/@rerun.txt'
+        format : 'rerun:test/e2e/reports/@rerun.txt'
         // formats : ['pretty','rerun:@rerun.txt']
     },
 
