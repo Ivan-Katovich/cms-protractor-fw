@@ -16,7 +16,7 @@ var platforms = {
 exports.config = {
 
     specs: ['features/**/*.feature'/*,'features/*.feature'*/],
-    // specs: ['@rerun.txt'],
+    // specs: ['reports/@rerun.txt'],
 
     capabilities: {
         name: 'chrome_'+process.env.PLATFORM,
