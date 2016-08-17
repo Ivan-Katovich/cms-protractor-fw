@@ -18,7 +18,7 @@ Then will be possible to execute tests using runner.bat or
 
     grunt e2e 
 
-(Webdriver should update automaticaly but you could do it manually)
+(Webdriver will be updated automaticaly but you could do it manually)
 
     node_modules\.bin\webdriver-manager update
 
